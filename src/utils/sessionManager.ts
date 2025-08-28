@@ -97,6 +97,7 @@ class SessionManager {
       const shareUrl = `${baseUrl}?s=${sessionId}`;
       
       console.log('✅ Supabase share link generated:', shareUrl);
+      console.log('✅ Share link length:', shareUrl.length);
       return shareUrl;
     } catch (error) {
       console.error('Failed to save to Supabase, falling back to URL encoding:', error);

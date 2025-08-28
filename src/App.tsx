@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import InterestSelector from './components/InterestSelector';
 import MatchResults from './components/MatchResults';
 import { MatchingEngine } from './utils/matchingEngine';
@@ -16,11 +16,13 @@ const App: React.FC = () => {
   const [user2Name, setUser2Name] = useState('');
   const [sessionId, setSessionId] = useState<string>('');
   const [sessionData, setSessionData] = useState<SessionData | null>(null);
+  const [shareLink, setShareLink] = useState('');
+  const [isLoadingShareLink, setIsLoadingShareLink] = useState(false);
 
   const engine = useMemo(() => new MatchingEngine(), []);
 
   // 处理会话数据的辅助函数
-  const processSessionData = (sessionDataFromUrl: SessionData) => {
+  const processSessionData = useCallback((sessionDataFromUrl: SessionData) => {
     console.log('✅ Found valid session data, processing...');
     console.log('Session data details:', {
       sessionId: sessionDataFromUrl.sessionId,
@@ -92,7 +94,7 @@ const App: React.FC = () => {
         console.log('🎯 Set stage to enterName');
       }
     }
-  };
+  }, [engine]);
 
   useEffect(() => {
     const initializeApp = async () => {
@@ -174,6 +176,35 @@ const App: React.FC = () => {
     
     initializeApp();
   }, [engine, processSessionData]);
+
+  // 当进入分享页面时生成短链接
+  useEffect(() => {
+    const generateShareLink = async () => {
+      if (stage === 'share' && sessionData) {
+        try {
+          setIsLoadingShareLink(true);
+          // 优先使用Supabase生成短链接
+          const link = await SessionManager.getSupabaseShareLink(sessionData);
+          setShareLink(link);
+          console.log('Generated share link for display:', link);
+          console.log('Share link length:', link.length);
+        } catch (error) {
+          console.error('Failed to generate share link:', error);
+          // 回退到传统方法
+          try {
+            const fallbackLink = SessionManager.getShareableLinkWithData(sessionData);
+            setShareLink(fallbackLink);
+          } catch (fallbackError) {
+            console.error('Fallback link generation also failed:', fallbackError);
+          }
+        } finally {
+          setIsLoadingShareLink(false);
+        }
+      }
+    };
+
+    generateShareLink();
+  }, [stage, sessionData]);
 
   const handleUser1Complete = async (interests: Interest[]) => {
     const newSessionId = sessionId || SessionManager.generateSessionId();
@@ -293,17 +324,17 @@ const App: React.FC = () => {
       };
       
       console.log('✅ Prepared session data for sharing:', shareSessionData);
-      console.log('About to call getShareableLinkWithData...');
       
       // 优先使用Supabase生成短链接
       const shareLink = await SessionManager.getSupabaseShareLink(shareSessionData);
       console.log('Generated share link:', shareLink);
       console.log('Link length:', shareLink.length);
-      console.log('Link contains data parameter:', shareLink.includes('?data='));
-      console.log('Link format check - contains session ID format:', shareLink.includes('?session='));
+      console.log('Link format check - using Supabase short ID:', shareLink.includes('?s='));
       
-      // 验证链接格式
-      if (!shareLink.includes('?data=')) {
+      // 验证链接格式 - 应该是短链接格式
+      if (shareLink.includes('?s=')) {
+        console.log('✅ Using Supabase short link format');
+      } else {
         console.warn('⚠️ Share link might be using fallback format:', shareLink);
       }
       
@@ -358,6 +389,15 @@ const App: React.FC = () => {
       // 优先使用Supabase生成短链接
       const reportLink = await SessionManager.getSupabaseShareLink(completeSessionData);
       console.log('✅ Generated report link:', reportLink);
+      console.log('Report link length:', reportLink.length);
+      console.log('Link format check - using Supabase short ID:', reportLink.includes('?s='));
+      
+      // 验证链接格式
+      if (reportLink.includes('?s=')) {
+        console.log('✅ Using Supabase short link format for results');
+      } else {
+        console.warn('⚠️ Report link might be using fallback format:', reportLink);
+      }
       
       await navigator.clipboard.writeText(reportLink);
       console.log('✅ Report link copied to clipboard');
@@ -509,13 +549,6 @@ const App: React.FC = () => {
       );
     }
 
-    let shareLink = '';
-    try {
-      shareLink = SessionManager.getShareableLinkWithData(sessionData);
-    } catch (error) {
-      console.error('Failed to generate share link:', error);
-    }
-
     return (
       <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
         <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 sm:p-8 shadow-xl max-w-md w-full text-center">
@@ -527,18 +560,28 @@ const App: React.FC = () => {
           
           <div className="bg-white/20 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
             <p className="text-white/60 text-xs sm:text-sm mb-2">分享链接</p>
-            <p className="text-white text-xs sm:text-sm break-all">
-              {shareLink || '链接生成失败'}
-            </p>
+            {isLoadingShareLink ? (
+              <p className="text-white/80 text-xs sm:text-sm">正在生成链接...</p>
+            ) : (
+              <p className="text-white text-xs sm:text-sm break-all">
+                {shareLink || '链接生成失败'}
+              </p>
+            )}
+            {!isLoadingShareLink && shareLink && (
+              <p className="text-white/60 text-xs mt-2">
+                链接长度: {shareLink.length} 字符
+                {shareLink.includes('?s=') && ' (短链接格式)'}
+              </p>
+            )}
           </div>
           
           <div className="space-y-2 sm:space-y-3">
             <button
               onClick={copyShareLink}
-              disabled={!shareLink}
+              disabled={!shareLink || isLoadingShareLink}
               className="w-full bg-gradient-to-r from-qixi-pink to-qixi-purple text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              复制分享链接
+              {isLoadingShareLink ? '生成中...' : '复制分享链接'}
             </button>
             
             <button
