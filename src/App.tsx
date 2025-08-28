@@ -19,132 +19,163 @@ const App: React.FC = () => {
 
   const engine = useMemo(() => new MatchingEngine(), []);
 
-  useEffect(() => {
-    // 优先检查URL数据参数
-    console.log('🔍 Checking URL data...');
-    console.log('Current URL:', window.location.href);
-    console.log('URL search:', window.location.search);
-    console.log('URL hostname:', window.location.hostname);
+  // 处理会话数据的辅助函数
+  const processSessionData = (sessionDataFromUrl: SessionData) => {
+    console.log('✅ Found valid session data, processing...');
+    console.log('Session data details:', {
+      sessionId: sessionDataFromUrl.sessionId,
+      hasUser1: !!sessionDataFromUrl.user1,
+      hasUser2: !!sessionDataFromUrl.user2,
+      user2Name: sessionDataFromUrl.user2Name,
+      hasMatchResult: !!sessionDataFromUrl.matchResult,
+      user1Name: sessionDataFromUrl.user1?.name,
+      user2ActualName: sessionDataFromUrl.user2?.name
+    });
     
-    const sessionDataFromUrl = SessionManager.getSessionDataFromUrl();
-    console.log('📦 Session data from URL:', sessionDataFromUrl);
+    console.log('Setting session data...');
+    setSessionData(sessionDataFromUrl);
     
-    if (sessionDataFromUrl) {
-      console.log('✅ Found valid session data from URL, processing...');
-      console.log('Session data details:', {
-        sessionId: sessionDataFromUrl.sessionId,
-        hasUser1: !!sessionDataFromUrl.user1,
-        hasUser2: !!sessionDataFromUrl.user2,
-        user2Name: sessionDataFromUrl.user2Name,
-        hasMatchResult: !!sessionDataFromUrl.matchResult,
-        user1Name: sessionDataFromUrl.user1?.name,
-        user2ActualName: sessionDataFromUrl.user2?.name
-      });
-      
-      console.log('Setting session data from URL...');
-      setSessionData(sessionDataFromUrl);
-      
-      // 安全地设置sessionId，如果不存在则生成新的
-      if (sessionDataFromUrl.sessionId) {
-        setSessionId(sessionDataFromUrl.sessionId);
-      } else {
-        const newSessionId = SessionManager.generateSessionId();
-        setSessionId(newSessionId);
-        // 更新sessionData中的sessionId
-        sessionDataFromUrl.sessionId = newSessionId;
-      }
-      
-      if (sessionDataFromUrl.user1 && sessionDataFromUrl.user2) {
-        // 两个用户都完成了，显示结果
-        console.log('🎯 Both users completed, showing results...');
-        console.log('User1 name:', sessionDataFromUrl.user1.name);
-        console.log('User2 name:', sessionDataFromUrl.user2.name);
-        console.log('Has pre-calculated result:', !!sessionDataFromUrl.matchResult);
-        
-        let result;
-        
-        // 如果会话数据中已经有匹配结果，直接使用
-        if (sessionDataFromUrl.matchResult) {
-          console.log('✅ Using pre-calculated match result from URL data');
-          result = sessionDataFromUrl.matchResult;
-        } else {
-          // 否则重新计算匹配结果
-          console.log('🔄 Calculating new match result');
-          result = engine.calculateMatch(sessionDataFromUrl.user1.interests, sessionDataFromUrl.user2.interests);
-        }
-        
-        console.log('📊 Match result prepared:', result);
-        setMatchResult(result);
-        setUser1Name(sessionDataFromUrl.user1.name);
-        setUser2Name(sessionDataFromUrl.user2.name);
-        setStage('results');
-        console.log('🎉 Set stage to results');
-      } else if (sessionDataFromUrl.user1) {
-        // 用户1完成了，检查是否有用户2的名字
-        console.log('👤 User 1 completed, checking for user2 name...');
-        console.log('User1 name:', sessionDataFromUrl.user1.name);
-        console.log('User2 name from URL:', sessionDataFromUrl.user2Name);
-        
-        setUser1Name(sessionDataFromUrl.user1.name);
-        setUser1Interests(sessionDataFromUrl.user1.interests);
-        
-        // 如果URL中已经有user2Name，直接进入用户2的选择界面
-        if (sessionDataFromUrl.user2Name) {
-          console.log('✅ Found user2Name in URL:', sessionDataFromUrl.user2Name);
-          setUser2Name(sessionDataFromUrl.user2Name);
-          setStage('user2');
-          console.log('🎯 Set stage to user2 (skip name entry)');
-        } else {
-          // 否则需要输入用户2的名字
-          console.log('❓ No user2Name found, showing enter name...');
-          setStage('enterName');
-          console.log('🎯 Set stage to enterName');
-        }
-      }
-      return;
+    // 安全地设置sessionId，如果不存在则生成新的
+    if (sessionDataFromUrl.sessionId) {
+      setSessionId(sessionDataFromUrl.sessionId);
     } else {
-      console.log('No session data found in URL');
+      const newSessionId = SessionManager.generateSessionId();
+      setSessionId(newSessionId);
+      // 更新sessionData中的sessionId
+      sessionDataFromUrl.sessionId = newSessionId;
     }
     
-    // 检查报告链接（向后兼容）
-    const reportId = SessionManager.getReportIdFromUrl();
-    if (reportId) {
-      const savedSession = SessionManager.loadSession();
-      if (savedSession && savedSession.sessionId === reportId && savedSession.user1 && savedSession.user2) {
-        const result = engine.calculateMatch(savedSession.user1.interests, savedSession.user2.interests);
-        setMatchResult(result);
-        setUser1Name(savedSession.user1.name);
-        setUser2Name(savedSession.user2.name);
-        setStage('results');
+    if (sessionDataFromUrl.user1 && sessionDataFromUrl.user2) {
+      // 两个用户都完成了，显示结果
+      console.log('🎯 Both users completed, showing results...');
+      console.log('User1 name:', sessionDataFromUrl.user1.name);
+      console.log('User2 name:', sessionDataFromUrl.user2.name);
+      console.log('Has pre-calculated result:', !!sessionDataFromUrl.matchResult);
+      
+      let result;
+      
+      // 如果会话数据中已经有匹配结果，直接使用
+      if (sessionDataFromUrl.matchResult) {
+        console.log('✅ Using pre-calculated match result from URL data');
+        result = sessionDataFromUrl.matchResult;
+      } else {
+        // 否则重新计算匹配结果
+        console.log('🔄 Calculating new match result');
+        result = engine.calculateMatch(sessionDataFromUrl.user1.interests, sessionDataFromUrl.user2.interests);
+      }
+      
+      console.log('📊 Match result prepared:', result);
+      setMatchResult(result);
+      setUser1Name(sessionDataFromUrl.user1.name);
+      setUser2Name(sessionDataFromUrl.user2.name);
+      setStage('results');
+      console.log('🎉 Set stage to results');
+    } else if (sessionDataFromUrl.user1) {
+      // 用户1完成了，检查是否有用户2的名字
+      console.log('👤 User 1 completed, checking for user2 name...');
+      console.log('User1 name:', sessionDataFromUrl.user1.name);
+      console.log('User2 name from URL:', sessionDataFromUrl.user2Name);
+      
+      setUser1Name(sessionDataFromUrl.user1.name);
+      setUser1Interests(sessionDataFromUrl.user1.interests);
+      
+      // 如果URL中已经有user2Name，直接进入用户2的选择界面
+      if (sessionDataFromUrl.user2Name) {
+        console.log('✅ Found user2Name in URL:', sessionDataFromUrl.user2Name);
+        setUser2Name(sessionDataFromUrl.user2Name);
+        setStage('user2');
+        console.log('🎯 Set stage to user2 (skip name entry)');
+      } else {
+        // 否则需要输入用户2的名字
+        console.log('❓ No user2Name found, showing enter name...');
+        setStage('enterName');
+        console.log('🎯 Set stage to enterName');
+      }
+    }
+  };
+
+  useEffect(() => {
+    const initializeApp = async () => {
+      console.log('🔍 Checking URL data...');
+      console.log('Current URL:', window.location.href);
+      console.log('URL search:', window.location.search);
+      console.log('URL hostname:', window.location.hostname);
+      
+      // 优先检查Supabase短链接
+      const shortId = SessionManager.getShortIdFromUrl();
+      if (shortId) {
+        console.log('🔗 Found Supabase short ID:', shortId);
+        const sessionDataFromSupabase = await SessionManager.getSessionFromSupabase(shortId);
+        if (sessionDataFromSupabase) {
+          console.log('✅ Found valid session data from Supabase');
+          processSessionData(sessionDataFromSupabase);
+          return;
+        }
+      }
+      
+      // 检查报告短链接
+      const reportShortId = SessionManager.getReportShortIdFromUrl();
+      if (reportShortId) {
+        console.log('📄 Found report short ID:', reportShortId);
+        const sessionDataFromSupabase = await SessionManager.getSessionFromSupabase(reportShortId);
+        if (sessionDataFromSupabase) {
+          console.log('✅ Found valid report data from Supabase');
+          processSessionData(sessionDataFromSupabase);
+          return;
+        }
+      }
+      
+      // Fallback到原有的URL数据检查
+      const sessionDataFromUrl = SessionManager.getSessionDataFromUrl();
+      console.log('📦 Session data from URL:', sessionDataFromUrl);
+      
+      if (sessionDataFromUrl) {
+        processSessionData(sessionDataFromUrl);
         return;
       }
-    }
-    
-    // 检查现有的session从URL或localStorage
-    const urlSessionId = SessionManager.getSessionIdFromUrl();
-    const savedSession = SessionManager.loadSession();
-    
-    if (urlSessionId && savedSession && savedSession.sessionId === urlSessionId) {
-      setSessionId(urlSessionId);
-      setSessionData(savedSession);
       
-      if (savedSession.user1 && savedSession.user2) {
-        // 两个用户都完成了，显示结果
-        const result = engine.calculateMatch(savedSession.user1.interests, savedSession.user2.interests);
-        setMatchResult(result);
-        setUser1Name(savedSession.user1.name);
-        setUser2Name(savedSession.user2.name);
-        setStage('results');
-      } else if (savedSession.user1) {
-        // 用户1完成了，用户2需要输入名字并完成
-        setUser1Name(savedSession.user1.name);
-        setUser1Interests(savedSession.user1.interests);
-        setStage('enterName');
+      // 检查报告链接（向后兼容）
+      const reportId = SessionManager.getReportIdFromUrl();
+      if (reportId) {
+        const savedSession = SessionManager.loadSession();
+        if (savedSession && savedSession.sessionId === reportId && savedSession.user1 && savedSession.user2) {
+          const result = engine.calculateMatch(savedSession.user1.interests, savedSession.user2.interests);
+          setMatchResult(result);
+          setUser1Name(savedSession.user1.name);
+          setUser2Name(savedSession.user2.name);
+          setStage('results');
+          return;
+        }
       }
-    }
-  }, [engine]);
+      
+      // 检查现有的session从URL或localStorage
+      const urlSessionId = SessionManager.getSessionIdFromUrl();
+      const savedSession = SessionManager.loadSession();
+      
+      if (urlSessionId && savedSession && savedSession.sessionId === urlSessionId) {
+        setSessionId(urlSessionId);
+        setSessionData(savedSession);
+        
+        if (savedSession.user1 && savedSession.user2) {
+          // 两个用户都完成了，显示结果
+          const result = engine.calculateMatch(savedSession.user1.interests, savedSession.user2.interests);
+          setMatchResult(result);
+          setUser1Name(savedSession.user1.name);
+          setUser2Name(savedSession.user2.name);
+          setStage('results');
+        } else if (savedSession.user1) {
+          // 用户1完成了，用户2需要输入名字并完成
+          setUser1Name(savedSession.user1.name);
+          setUser1Interests(savedSession.user1.interests);
+          setStage('enterName');
+        }
+      }
+    };
+    
+    initializeApp();
+  }, [engine, processSessionData]);
 
-  const handleUser1Complete = (interests: Interest[]) => {
+  const handleUser1Complete = async (interests: Interest[]) => {
     const newSessionId = sessionId || SessionManager.generateSessionId();
     const user1Selection = SessionManager.createUserSelection('user1', user1Name, interests);
     
@@ -160,10 +191,18 @@ const App: React.FC = () => {
     setSessionData(newSessionData);
     setUser1Interests(interests);
     SessionManager.saveSession(newSessionData);
+    
+    // 保存到Supabase
+    try {
+      await SessionManager.updateSupabaseSession(newSessionId, newSessionData);
+    } catch (error) {
+      console.error('Failed to save to Supabase:', error);
+    }
+    
     setStage('share');
   };
 
-  const handleUser2Complete = (interests: Interest[]) => {
+  const handleUser2Complete = async (interests: Interest[]) => {
     console.log('handleUser2Complete called');
     console.log('Current sessionData:', sessionData);
     console.log('User2 name:', user2Name);
@@ -189,6 +228,13 @@ const App: React.FC = () => {
       setSessionData(updatedSession);
       setUser2Interests(interests);
       SessionManager.saveSession(updatedSession);
+      
+      // 保存完整的会话数据到Supabase
+      try {
+        await SessionManager.updateSupabaseSession(sessionId, updatedSession);
+      } catch (error) {
+        console.error('Failed to save complete session to Supabase:', error);
+      }
       
       // 使用更新后的session数据计算匹配结果
       const result = engine.calculateMatch(updatedSession.user1!.interests, interests);
@@ -249,7 +295,8 @@ const App: React.FC = () => {
       console.log('✅ Prepared session data for sharing:', shareSessionData);
       console.log('About to call getShareableLinkWithData...');
       
-      const shareLink = SessionManager.getShareableLinkWithData(shareSessionData);
+      // 优先使用Supabase生成短链接
+      const shareLink = await SessionManager.getSupabaseShareLink(shareSessionData);
       console.log('Generated share link:', shareLink);
       console.log('Link length:', shareLink.length);
       console.log('Link contains data parameter:', shareLink.includes('?data='));
@@ -308,7 +355,8 @@ const App: React.FC = () => {
         return;
       }
       
-      const reportLink = SessionManager.getShareableLinkWithData(completeSessionData);
+      // 优先使用Supabase生成短链接
+      const reportLink = await SessionManager.getSupabaseShareLink(completeSessionData);
       console.log('✅ Generated report link:', reportLink);
       
       await navigator.clipboard.writeText(reportLink);
@@ -383,7 +431,13 @@ const App: React.FC = () => {
       
       <div className="text-center mt-6 sm:mt-8">
         <button
-          onClick={() => userNumber === 1 ? handleUser1Complete(user1Interests) : handleUser2Complete(user2Interests)}
+          onClick={async () => {
+            if (userNumber === 1) {
+              await handleUser1Complete(user1Interests);
+            } else {
+              await handleUser2Complete(user2Interests);
+            }
+          }}
           disabled={(userNumber === 1 ? user1Interests : user2Interests).length === 0}
           className="bg-gradient-to-r from-qixi-pink to-qixi-purple text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >

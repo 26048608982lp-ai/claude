@@ -1,8 +1,17 @@
 import { SessionData, UserSelection, Interest } from '../types';
+import { supabaseService } from './supabase';
 
 const STORAGE_KEY = 'qixi-match-session';
 
 class SessionManager {
+  // 检查Supabase是否可用
+  private isSupabaseAvailable(): boolean {
+    try {
+      return !!(process.env.REACT_APP_SUPABASE_URL && process.env.REACT_APP_SUPABASE_ANON_KEY);
+    } catch {
+      return false;
+    }
+  }
   generateSessionId(): string {
     return Math.random().toString(36).substr(2, 9);
   }
@@ -71,6 +80,67 @@ class SessionManager {
   getSessionIdFromUrl(): string | null {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('session');
+  }
+
+  // 新的Supabase分享链接生成方法
+  async getSupabaseShareLink(sessionData: SessionData, shortId?: string): Promise<string> {
+    console.log('SessionManager: getSupabaseShareLink called');
+    
+    if (!this.isSupabaseAvailable()) {
+      console.log('Supabase not available, falling back to URL encoding');
+      return this.getShareableLinkWithData(sessionData);
+    }
+    
+    try {
+      const sessionId = await supabaseService.saveSession(sessionData, shortId);
+      const baseUrl = window.location.origin;
+      const shareUrl = `${baseUrl}?s=${sessionId}`;
+      
+      console.log('✅ Supabase share link generated:', shareUrl);
+      return shareUrl;
+    } catch (error) {
+      console.error('Failed to save to Supabase, falling back to URL encoding:', error);
+      return this.getShareableLinkWithData(sessionData);
+    }
+  }
+
+  // 从Supabase获取会话数据
+  async getSessionFromSupabase(shortId: string): Promise<SessionData | null> {
+    console.log('SessionManager: getSessionFromSupabase called with shortId:', shortId);
+    
+    if (!this.isSupabaseAvailable()) {
+      console.log('Supabase not available');
+      return null;
+    }
+    
+    try {
+      const sessionData = await supabaseService.getSession(shortId);
+      if (sessionData) {
+        console.log('✅ Session data retrieved from Supabase');
+        return sessionData as SessionData;
+      }
+    } catch (error) {
+      console.error('Failed to fetch from Supabase:', error);
+    }
+    
+    return null;
+  }
+
+  // 更新Supabase中的会话数据
+  async updateSupabaseSession(shortId: string, sessionData: SessionData): Promise<void> {
+    console.log('SessionManager: updateSupabaseSession called');
+    
+    if (!this.isSupabaseAvailable()) {
+      console.log('Supabase not available, skipping update');
+      return;
+    }
+    
+    try {
+      await supabaseService.updateSession(shortId, sessionData);
+      console.log('✅ Session data updated in Supabase');
+    } catch (error) {
+      console.error('Failed to update Supabase session:', error);
+    }
   }
 
   getShareableLinkWithData(sessionData: SessionData): string {
@@ -271,6 +341,24 @@ class SessionManager {
       console.log('Available URL parameters:', Array.from(urlParams.keys()));
     }
     return null;
+  }
+
+  // 获取短链接ID从URL
+  getShortIdFromUrl(): string | null {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('s');
+  }
+
+  // 获取报告短链接
+  getReportShortLink(sessionId: string): string {
+    const baseUrl = window.location.origin;
+    return `${baseUrl}?r=${sessionId}`;
+  }
+
+  // 获取报告短ID从URL
+  getReportShortIdFromUrl(): string | null {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('r');
   }
 
   getReportLink(sessionId: string): string {
