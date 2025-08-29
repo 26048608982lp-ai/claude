@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is Soul Match - an international soulmate matching web application built with React and TypeScript. The app features a user-friendly grid-based interest selection system where users can select their interests and rate their importance level (1-5 stars). The system calculates compatibility between two users using a sophisticated matching algorithm and recommends personalized dating activities across cultures. The app is optimized for global deployment with full internationalization support.
+This is Soul Match - an international soulmate matching web application built with React and TypeScript. The app features a user-friendly grid-based interest selection system where users can select their interests and rate their importance level (1-5 stars). The system calculates compatibility between two users using a sophisticated matching algorithm and recommends personalized dating activities across cultures. The app is optimized for global deployment with comprehensive multi-language support and region-based localization.
 
 ## Development Commands
 
@@ -32,6 +32,7 @@ This is Soul Match - an international soulmate matching web application built wi
 3. **MatchResults.tsx** - Comprehensive results display showing compatibility scores and activity recommendations
 4. **SessionManager** - Handles persistent user sessions between both participants with Supabase integration
 5. **Supabase Integration** - Provides reliable cross-device data sharing with short URL generation
+6. **LanguageSwitcher.tsx** - Multi-language selector with region detection and persistent preferences
 
 ### Data Flow
 - User inputs flow through App stage management with enhanced session handling
@@ -47,6 +48,42 @@ This is Soul Match - an international soulmate matching web application built wi
 - **Algorithmic Matching**: Multi-dimensional scoring considering interest overlap and importance weights
 - **Supabase Integration**: Reliable cross-device data sharing with short URL generation
 - **Type Safety**: Comprehensive TypeScript interfaces for all data structures
+- **Internationalization (i18n)**: Multi-language support with region detection and automatic localization
+
+### Internationalization System
+The app implements comprehensive internationalization using react-i18next:
+
+#### **Supported Languages**
+- **English (en)**: Default language, complete UI translation
+- **简体中文 (zh)**: Simplified Chinese for mainland China users
+- **Español (es)**: Spanish for international users
+- **Français (fr)**: French for international users
+
+#### **Region Detection & Auto-Switching**
+- **Browser Language Detection**: Automatically detects user's browser language preferences
+- **Mainland China Override**: Users from `zh-CN` region automatically see Chinese interface
+- **Manual Language Switcher**: Floating language selector with native language names
+- **Persistent Preferences**: User's language choice saved in localStorage
+
+#### **Translation System**
+- **Translation Files**: JSON-based translations in `src/locales/[lang]/translation.json`
+- **Nested Key Structure**: Organized translation keys for better maintainability
+- **TypeScript Support**: Proper typing for translation keys and parameters
+- **Fallback Mechanism**: Graceful handling of missing translations with English fallback
+
+#### **Localized Content**
+- **UI Components**: All buttons, labels, forms, and navigation elements
+- **Interest Categories**: Entertainment, Sports, Food, Travel with culturally relevant terms
+- **Interest Items**: All 24 interest items translated across all supported languages
+- **Activity Recommendations**: Dating activities and descriptions localized
+- **Error Messages**: All error states and alerts translated
+- **Match Results**: Compatibility scoring and relationship advice localized
+
+#### **Cultural Adaptation**
+- **Chinese Localization**: Simplified characters and China-specific terminology
+- **Interest Categories**: Culturally relevant entertainment, food, and activity options
+- **Dating Activities**: Recommendations appropriate for different cultural contexts
+- **UI/UX Considerations**: Layout and design optimized for different languages
 
 ### Styling System
 - **Tailwind CSS** with custom color palette (qixi-pink, qixi-purple, qixi-blue, qixi-gold)
@@ -66,16 +103,47 @@ The MatchingEngine class implements:
 - **TypeScript**: Strong typing throughout with interfaces for all data structures
 - **No External State**: All state managed locally within components (no Redux/Context)
 - **React Version**: Using React 18.3.1 for compatibility with Create React App 5.0.1
-- **Internationalization**: Full English language support with optimized global deployment
+- **Internationalization**: Multi-language support (English, Chinese, Spanish, French) with region detection
+- **Localization**: Automatic language switching for mainland China users (zh-CN → 简体中文)
 
 ### Development Notes
 - ESLint treats warnings as errors in CI builds
 - Vercel deployment configured with custom routing for SPA support
-- English language interface with emoji icons for visual appeal
+- Multi-language interface with emoji icons for visual appeal
+- **i18n Framework**: Using react-i18next v12.3.1 for TypeScript compatibility
+- **Language Detection**: Browser-based language detection with localStorage persistence
+- **Translation Management**: JSON-based translation files with nested key structure
 - **Project Structure**: Single React application in root directory with standard Create React App structure
 - **React Version Compatibility**: Using React 18.3.1 for compatibility with Create React App 5.0.1 (React 19+ may cause blank page issues)
 - **Supabase Setup**: Requires environment variables for cross-device data sharing
 - **Short URL Generation**: Automatic generation of shareable links using Supabase
+
+### File Structure
+```
+src/
+├── components/
+│   ├── LanguageSwitcher.tsx     # Multi-language selector component
+│   ├── InterestSelector.tsx     # Localized interest selection
+│   ├── MatchResults.tsx         # Localized match results display
+│   └── ErrorBoundary.tsx       # Localized error handling
+├── i18n/
+│   └── index.ts                # i18next configuration with region detection
+├── locales/
+│   ├── en/
+│   │   └── translation.json     # English translations
+│   ├── zh/
+│   │   └── translation.json     # Simplified Chinese translations
+│   ├── es/
+│   │   └── translation.json     # Spanish translations
+│   └── fr/
+│       └── translation.json     # French translations
+├── utils/
+│   ├── matchingEngine.ts       # Matching algorithm with localized activities
+│   ├── sessionManager.ts       # Session management with UTF-8 support
+│   └── supabase.ts            # Supabase integration
+└── types/
+    └── index.ts                # TypeScript interfaces
+```
 
 ### Session Management
 - `SessionManager` handles persistent user sessions between both participants
@@ -85,6 +153,9 @@ The MatchingEngine class implements:
 - **Session Validation**: Automatic cleanup of expired sessions (24-hour expiry)
 - **Data Recovery**: Multiple fallback mechanisms for data integrity
 - **International Support**: UTF-8 encoding for global character support
+- **Multi-language Data**: All user-generated content supports international characters
+- **Region Awareness**: Automatic interface adaptation based on user location
+- **Language Preferences**: Persistent language selection across sessions
 
 ### Environment Variables
 - `REACT_APP_SUPABASE_URL`: Supabase project URL for database connection

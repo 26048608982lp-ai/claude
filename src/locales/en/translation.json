@@ -1,0 +1,196 @@
+{
+  "app": {
+    "title": "Soul Match",
+    "subtitle": "Discover your soulmate through AI-powered compatibility matching across cultures",
+    "welcome": {
+      "enterYourName": "Enter your name",
+      "enterPartnerName": "Enter partner's name",
+      "startMatching": "Start Matching",
+      "beginMatch": "Begin Match"
+    },
+    "userSelection": {
+      "title": "{{name}}'s Soul Selection",
+      "subtitle": "Select your interests (skip uninterested items). Set importance level (1-5 stars) - the higher the score, the deeper your soul connection.",
+      "completeSelection": "Complete selection and share with partner",
+      "viewResults": "View match results",
+      "shareAgain": "Share again"
+    },
+    "enterName": {
+      "title": "Enter Your Name",
+      "subtitle": "{{user1Name}} has completed their soul profile, now it's your turn to discover your connection!",
+      "startMatching": "Start Matching"
+    },
+    "share": {
+      "title": "Share with {{partnerName}}",
+      "subtitle": "{{userName}} has completed their soul match profile, share the link below with {{partnerName}} to discover your connection!",
+      "shareLink": "Share Link",
+      "generatingLink": "Generating link...",
+      "copyShareLink": "Copy Share Link",
+      "generating": "Generating...",
+      "startFillingOut": "I am {{partnerName}}, start filling out",
+      "linkLength": "Link length: {{length}} characters",
+      "shortLinkFormat": " (short link format)"
+    },
+    "results": {
+      "title": "Soul Match Results",
+      "subtitle": "Discover your soul connection and explore personalized date activities",
+      "shareResults": "Share Results",
+      "startOver": "Start Over"
+    },
+    "errors": {
+      "dataLost": "Data Lost",
+      "sharingDataLost": "Sharing data lost, please start over.",
+      "startOver": "Start Over",
+      "noShareableData": "No shareable data available",
+      "userADataIncomplete": "User A data incomplete, please complete selection again",
+      "ensurePartnerName": "Please ensure you have entered User B's name",
+      "noResultsData": "No results data available to share",
+      "incompleteUserData": "Sharing data incomplete, please complete match again",
+      "missingUserBName": "Missing User B name information",
+      "copyFailed": "Failed to copy {{type}} link, please copy manually",
+      "linkGenerationFailed": "Link generation failed"
+    }
+  },
+  "interestSelector": {
+    "title": "Select Your Interests",
+    "categories": {
+      "entertainment": "Entertainment",
+      "sports": "Sports", 
+      "food": "Food",
+      "travel": "Travel"
+    },
+    "interests": {
+      "entertainment": {
+        "movies": "Movies",
+        "music": "Music",
+        "games": "Gaming",
+        "concerts": "Concerts",
+        "theater": "Theater",
+        "art": "Art Exhibitions"
+      },
+      "sports": {
+        "basketball": "Basketball",
+        "football": "Football",
+        "tennis": "Tennis",
+        "swimming": "Swimming",
+        "hiking": "Hiking",
+        "yoga": "Yoga"
+      },
+      "food": {
+        "chinese": "Chinese Food",
+        "western": "Western Food",
+        "japanese": "Japanese Food",
+        "dessert": "Desserts",
+        "coffee": "Coffee",
+        "cooking": "Cooking"
+      },
+      "travel": {
+        "beach": "Beach",
+        "mountains": "Mountains",
+        "city": "City",
+        "countryside": "Countryside",
+        "museum": "Museums",
+        "shopping": "Shopping"
+      }
+    },
+    "importance": "Importance",
+    "normal": "Normal",
+    "veryImportant": "Very Important",
+    "selectedInterests": "Selected Interests ({{count}})"
+  },
+  "matchResults": {
+    "matchResults": "{{user1Name}} ❤️ {{user2Name}} Match Results",
+    "commonInterests": "Common Interests ({{count}})",
+    "noCommonInterests": "No common interests, but this is a great opportunity to get to know each other!",
+    "uniqueInterests": {
+      "user1": "{{name}}'s Unique Interests",
+      "user2": "{{name}}'s Unique Interests",
+      "allCommon": "All interests are common"
+    },
+    "recommendedActivities": "Recommended Date Activities for You",
+    "importance": "Importance: {{importance}}★",
+    "tips": {
+      "title": "Tips to Strengthen Your Relationship",
+      "commonInterests": "Based on Common Interests",
+      "uniqueInterests": "Based on Unique Interests",
+      "commonInterestsTip": "Participate in more {{interest}} related activities to create shared memories.",
+      "noCommonInterestsTip": "Try exploring new interests together to discover new sides of each other.",
+      "uniqueInterestsTip": "Share your expertise with each other and teach new skills.",
+      "noUniqueInterestsTip": "Try completely new activities together and grow as a couple."
+    }
+  },
+  "activities": {
+    "movie_night": {
+      "name": "Movie Night",
+      "description": "Watch a romantic movie together and enjoy quality time",
+      "duration": "2-3 hours",
+      "cost": "Medium"
+    },
+    "concert": {
+      "name": "Concert",
+      "description": "Attend an exciting live concert",
+      "duration": "3-4 hours",
+      "cost": "High"
+    },
+    "hiking_date": {
+      "name": "Hiking Date",
+      "description": "Hike together and enjoy natural scenery",
+      "duration": "Half day",
+      "cost": "Low"
+    },
+    "cooking_class": {
+      "name": "Cooking Class",
+      "description": "Learn to cook delicious meals together",
+      "duration": "2-3 hours",
+      "cost": "Medium"
+    },
+    "beach_vacation": {
+      "name": "Beach Vacation",
+      "description": "Enjoy sunshine, sand, and waves",
+      "duration": "Few days",
+      "cost": "High"
+    },
+    "museum_visit": {
+      "name": "Museum Visit",
+      "description": "Explore culture and history together",
+      "duration": "2-3 hours",
+      "cost": "Low"
+    },
+    "game_night": {
+      "name": "Game Night",
+      "description": "Play games together and enjoy friendly competition",
+      "duration": "2-3 hours",
+      "cost": "Low"
+    },
+    "coffee_date": {
+      "name": "Coffee Date",
+      "description": "Enjoy a relaxing time at a coffee shop",
+      "duration": "1-2 hours",
+      "cost": "Low"
+    }
+  },
+  "categories": {
+    "entertainment": "Entertainment",
+    "sports": "Sports",
+    "food": "Food",
+    "travel": "Travel"
+  },
+  "matchLevels": {
+    "perfect": "Perfect Match 💕",
+    "deep": "Deep Connection 💖",
+    "great": "Great Compatibility 💗",
+    "good": "Good Attraction 💓",
+    "room": "Room to Grow 💝"
+  },
+  "errorBoundary": {
+    "title": "Oops! Something went wrong",
+    "subtitle": "The app encountered an unexpected error. Please refresh the page or try again later.",
+    "errorDetails": "Error Details:",
+    "refreshPage": "Refresh Page",
+    "tryAgain": "Try Again"
+  },
+  "language": {
+    "switch": "切换到中文",
+    "switchTo": "Switch to {{language}}"
+  }
+}

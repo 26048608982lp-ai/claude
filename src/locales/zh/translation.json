@@ -1,0 +1,196 @@
+{
+  "app": {
+    "title": "心灵匹配",
+    "subtitle": "通过AI驱动的跨文化兼容性匹配发现你的灵魂伴侣",
+    "welcome": {
+      "enterYourName": "输入你的名字",
+      "enterPartnerName": "输入伴侣的名字",
+      "startMatching": "开始匹配",
+      "beginMatch": "开始匹配"
+    },
+    "userSelection": {
+      "title": "{{name}}的心灵选择",
+      "subtitle": "选择你的兴趣（不感兴趣的可以跳过）。设置重要性等级（1-5星）- 分数越高，灵魂连接越深。",
+      "completeSelection": "完成选择并与伴侣分享",
+      "viewResults": "查看匹配结果",
+      "shareAgain": "再次分享"
+    },
+    "enterName": {
+      "title": "输入你的名字",
+      "subtitle": "{{user1Name}}已经完成了他们的心灵档案，现在轮到你发现你们的连接了！",
+      "startMatching": "开始匹配"
+    },
+    "share": {
+      "title": "与{{partnerName}}分享",
+      "subtitle": "{{userName}}已经完成了他们心灵匹配档案，通过下面的链接与{{partnerName}}分享来发现你们的连接！",
+      "shareLink": "分享链接",
+      "generatingLink": "正在生成链接...",
+      "copyShareLink": "复制分享链接",
+      "generating": "正在生成...",
+      "startFillingOut": "我是{{partnerName}}，开始填写",
+      "linkLength": "链接长度：{{length}}个字符",
+      "shortLinkFormat": "（短链接格式）"
+    },
+    "results": {
+      "title": "心灵匹配结果",
+      "subtitle": "发现你们的灵魂连接，探索个性化约会活动",
+      "shareResults": "分享结果",
+      "startOver": "重新开始"
+    },
+    "errors": {
+      "dataLost": "数据丢失",
+      "sharingDataLost": "分享数据丢失，请重新开始。",
+      "startOver": "重新开始",
+      "noShareableData": "没有可分享的数据",
+      "userADataIncomplete": "用户A数据不完整，请重新完成选择",
+      "ensurePartnerName": "请确保你已经输入了用户B的名字",
+      "noResultsData": "没有可分享的结果数据",
+      "incompleteUserData": "分享数据不完整，请重新完成匹配",
+      "missingUserBName": "缺少用户B姓名信息",
+      "copyFailed": "复制{{type}}链接失败，请手动复制",
+      "linkGenerationFailed": "链接生成失败"
+    }
+  },
+  "interestSelector": {
+    "title": "选择你的兴趣",
+    "categories": {
+      "entertainment": "娱乐",
+      "sports": "运动", 
+      "food": "美食",
+      "travel": "旅行"
+    },
+    "interests": {
+      "entertainment": {
+        "movies": "电影",
+        "music": "音乐",
+        "games": "游戏",
+        "concerts": "演唱会",
+        "theater": "戏剧",
+        "art": "艺术展览"
+      },
+      "sports": {
+        "basketball": "篮球",
+        "football": "足球",
+        "tennis": "网球",
+        "swimming": "游泳",
+        "hiking": "徒步",
+        "yoga": "瑜伽"
+      },
+      "food": {
+        "chinese": "中餐",
+        "western": "西餐",
+        "japanese": "日料",
+        "dessert": "甜品",
+        "coffee": "咖啡",
+        "cooking": "烹饪"
+      },
+      "travel": {
+        "beach": "海滩",
+        "mountains": "山脉",
+        "city": "城市",
+        "countryside": "乡村",
+        "museum": "博物馆",
+        "shopping": "购物"
+      }
+    },
+    "importance": "重要性",
+    "normal": "一般",
+    "veryImportant": "非常重要",
+    "selectedInterests": "已选择的兴趣 ({{count}})"
+  },
+  "matchResults": {
+    "matchResults": "{{user1Name}} ❤️ {{user2Name}} 匹配结果",
+    "commonInterests": "共同兴趣 ({{count}})",
+    "noCommonInterests": "没有共同兴趣，但这是了解彼此的好机会！",
+    "uniqueInterests": {
+      "user1": "{{name}}的独特兴趣",
+      "user2": "{{name}}的独特兴趣",
+      "allCommon": "所有兴趣都是共同的"
+    },
+    "recommendedActivities": "为你们推荐的约会活动",
+    "importance": "重要性：{{importance}}★",
+    "tips": {
+      "title": "加强你们关系的建议",
+      "commonInterests": "基于共同兴趣",
+      "uniqueInterests": "基于独特兴趣",
+      "commonInterestsTip": "多参与与{{interest}}相关的活动来创造共同回忆。",
+      "noCommonInterestsTip": "尝试一起探索新的兴趣，发现彼此的新一面。",
+      "uniqueInterestsTip": "与对方分享你的专业知识，教授新技能。",
+      "noUniqueInterestsTip": "尝试全新的活动，一起成长。"
+    }
+  },
+  "activities": {
+    "movie_night": {
+      "name": "电影之夜",
+      "description": "一起看浪漫电影，享受美好时光",
+      "duration": "2-3小时",
+      "cost": "中等"
+    },
+    "concert": {
+      "name": "演唱会",
+      "description": "参加激动人心的现场演唱会",
+      "duration": "3-4小时",
+      "cost": "高"
+    },
+    "hiking_date": {
+      "name": "徒步约会",
+      "description": "一起徒步，享受自然风光",
+      "duration": "半天",
+      "cost": "低"
+    },
+    "cooking_class": {
+      "name": "烹饪课程",
+      "description": "一起学习制作美味餐点",
+      "duration": "2-3小时",
+      "cost": "中等"
+    },
+    "beach_vacation": {
+      "name": "海滩度假",
+      "description": "享受阳光、沙滩和海浪",
+      "duration": "几天",
+      "cost": "高"
+    },
+    "museum_visit": {
+      "name": "博物馆参观",
+      "description": "一起探索文化和历史",
+      "duration": "2-3小时",
+      "cost": "低"
+    },
+    "game_night": {
+      "name": "游戏之夜",
+      "description": "一起玩游戏，享受友好的竞争",
+      "duration": "2-3小时",
+      "cost": "低"
+    },
+    "coffee_date": {
+      "name": "咖啡约会",
+      "description": "在咖啡店享受轻松时光",
+      "duration": "1-2小时",
+      "cost": "低"
+    }
+  },
+  "categories": {
+    "entertainment": "娱乐",
+    "sports": "运动",
+    "food": "美食",
+    "travel": "旅行"
+  },
+  "matchLevels": {
+    "perfect": "完美匹配 💕",
+    "deep": "深度连接 💖",
+    "great": "高度兼容 💗",
+    "good": "良好吸引 💓",
+    "room": "成长空间 💝"
+  },
+  "errorBoundary": {
+    "title": "抱歉！出现了问题",
+    "subtitle": "应用遇到了意外错误。请刷新页面或稍后再试。",
+    "errorDetails": "错误详情：",
+    "refreshPage": "刷新页面",
+    "tryAgain": "重试"
+  },
+  "language": {
+    "switch": "Switch to English",
+    "switchTo": "切换到{{language}}"
+  }
+}

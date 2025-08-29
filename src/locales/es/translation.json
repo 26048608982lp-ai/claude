@@ -1,0 +1,196 @@
+{
+  "app": {
+    "title": "Soul Match",
+    "subtitle": "Descubre tu alma gemela a través de compatibilidad con IA entre culturas",
+    "welcome": {
+      "enterYourName": "Ingresa tu nombre",
+      "enterPartnerName": "Ingresa el nombre de tu pareja",
+      "startMatching": "Comenzar Matching",
+      "beginMatch": "Comenzar Match"
+    },
+    "userSelection": {
+      "title": "Selección del Alma de {{name}}",
+      "subtitle": "Selecciona tus intereses (omite los que no te interesen). Establece nivel de importancia (1-5 estrellas) - cuanto más alto, más profunda tu conexión del alma.",
+      "completeSelection": "Completar selección y compartir con pareja",
+      "viewResults": "Ver resultados del match",
+      "shareAgain": "Compartir de nuevo"
+    },
+    "enterName": {
+      "title": "Ingresa tu Nombre",
+      "subtitle": "{{user1Name}} ha completado su perfil del alma, ¡ahora es tu turno de descubrir su conexión!",
+      "startMatching": "Comenzar Matching"
+    },
+    "share": {
+      "title": "Compartir con {{partnerName}}",
+      "subtitle": "{{userName}} ha completado su perfil de match del alma, ¡comparte el siguiente enlace con {{partnerName}} para descubrir su conexión!",
+      "shareLink": "Enlace para Compartir",
+      "generatingLink": "Generando enlace...",
+      "copyShareLink": "Copiar Enlace",
+      "generating": "Generando...",
+      "startFillingOut": "Soy {{partnerName}}, comenzar a llenar",
+      "linkLength": "Longitud del enlace: {{length}} caracteres",
+      "shortLinkFormat": " (formato de enlace corto)"
+    },
+    "results": {
+      "title": "Resultados del Match del Alma",
+      "subtitle": "Descubre tu conexión del alma y explora actividades de citas personalizadas",
+      "shareResults": "Compartir Resultados",
+      "startOver": "Empezar de Nuevo"
+    },
+    "errors": {
+      "dataLost": "Datos Perdidos",
+      "sharingDataLost": "Datos para compartir perdidos, por favor comienza de nuevo.",
+      "startOver": "Empezar de Nuevo",
+      "noShareableData": "No hay datos disponibles para compartir",
+      "userADataIncomplete": "Datos del Usuario A incompletos, por favor completa la selección de nuevo",
+      "ensurePartnerName": "Por favor asegúrate de haber ingresado el nombre del Usuario B",
+      "noResultsData": "No hay datos de resultados disponibles para compartir",
+      "incompleteUserData": "Datos para compartir incompletos, por favor completa el match de nuevo",
+      "missingUserBName": "Falta información del nombre del Usuario B",
+      "copyFailed": "Falló al copiar el enlace de {{type}}, por favor copia manualmente",
+      "linkGenerationFailed": "Falló la generación del enlace"
+    }
+  },
+  "interestSelector": {
+    "title": "Selecciona tus Intereses",
+    "categories": {
+      "entertainment": "Entretenimiento",
+      "sports": "Deportes", 
+      "food": "Comida",
+      "travel": "Viajes"
+    },
+    "interests": {
+      "entertainment": {
+        "movies": "Películas",
+        "music": "Música",
+        "games": "Juegos",
+        "concerts": "Conciertos",
+        "theater": "Teatro",
+        "art": "Exposiciones de Arte"
+      },
+      "sports": {
+        "basketball": "Baloncesto",
+        "football": "Fútbol",
+        "tennis": "Tenis",
+        "swimming": "Natación",
+        "hiking": "Senderismo",
+        "yoga": "Yoga"
+      },
+      "food": {
+        "chinese": "Comida China",
+        "western": "Comida Occidental",
+        "japanese": "Comida Japonesa",
+        "dessert": "Postres",
+        "coffee": "Café",
+        "cooking": "Cocinar"
+      },
+      "travel": {
+        "beach": "Playa",
+        "mountains": "Montañas",
+        "city": "Ciudad",
+        "countryside": "Campo",
+        "museum": "Museos",
+        "shopping": "Compras"
+      }
+    },
+    "importance": "Importancia",
+    "normal": "Normal",
+    "veryImportant": "Muy Importante",
+    "selectedInterests": "Intereses Seleccionados ({{count}})"
+  },
+  "matchResults": {
+    "matchResults": "Resultados del Match {{user1Name}} ❤️ {{user2Name}}",
+    "commonInterests": "Intereses Comunes ({{count}})",
+    "noCommonInterests": "¡No hay intereses comunes, pero esta es una gran oportunidad para conocerse!",
+    "uniqueInterests": {
+      "user1": "Intereses Únicos de {{name}}",
+      "user2": "Intereses Únicos de {{name}}",
+      "allCommon": "Todos los intereses son comunes"
+    },
+    "recommendedActivities": "Actividades de Cita Recomendadas para Ti",
+    "importance": "Importancia: {{importance}}★",
+    "tips": {
+      "title": "Consejos para Fortalecer tu Relación",
+      "commonInterests": "Basado en Intereses Comunes",
+      "uniqueInterests": "Basado en Intereses Únicos",
+      "commonInterestsTip": "Participa en más actividades relacionadas con {{interest}} para crear recuerdos compartidos.",
+      "noCommonInterestsTip": "Intenta explorar nuevos intereses juntos para descubrir nuevos aspectos el uno del otro.",
+      "uniqueInterestsTip": "Comparte tu experiencia el uno con el otro y enseña nuevas habilidades.",
+      "noUniqueInterestsTip": "Intenta actividades completamente nuevas juntos y crezcan como pareja."
+    }
+  },
+  "activities": {
+    "movie_night": {
+      "name": "Noche de Películas",
+      "description": "Miren una película romántica juntos y disfruten tiempo de calidad",
+      "duration": "2-3 horas",
+      "cost": "Medio"
+    },
+    "concert": {
+      "name": "Concierto",
+      "description": "Asistan a un concierto en vivo emocionante",
+      "duration": "3-4 horas",
+      "cost": "Alto"
+    },
+    "hiking_date": {
+      "name": "Cita de Senderismo",
+      "description": "Hagan senderismo juntos y disfruten paisajes naturales",
+      "duration": "Medio día",
+      "cost": "Bajo"
+    },
+    "cooking_class": {
+      "name": "Clase de Cocina",
+      "description": "Aprendan a cocinar comidas deliciosos juntos",
+      "duration": "2-3 horas",
+      "cost": "Medio"
+    },
+    "beach_vacation": {
+      "name": "Vacaciones en la Playa",
+      "description": "Disfruten sol, arena y olas",
+      "duration": "Pocos días",
+      "cost": "Alto"
+    },
+    "museum_visit": {
+      "name": "Visita al Museo",
+      "description": "Exploren cultura e historia juntos",
+      "duration": "2-3 horas",
+      "cost": "Bajo"
+    },
+    "game_night": {
+      "name": "Noche de Juegos",
+      "description": "Jueguen juntos y disfruten competencia amistosa",
+      "duration": "2-3 horas",
+      "cost": "Bajo"
+    },
+    "coffee_date": {
+      "name": "Cita de Café",
+      "description": "Disfruten un tiempo relajante en una cafetería",
+      "duration": "1-2 horas",
+      "cost": "Bajo"
+    }
+  },
+  "categories": {
+    "entertainment": "Entretenimiento",
+    "sports": "Deportes",
+    "food": "Comida",
+    "travel": "Viajes"
+  },
+  "matchLevels": {
+    "perfect": "Match Perfecto 💕",
+    "deep": "Conexión Profunda 💖",
+    "great": "Gran Compatibilidad 💗",
+    "good": "Buena Atracción 💓",
+    "room": "Espacio para Crecer 💝"
+  },
+  "errorBoundary": {
+    "title": "¡Ups! Algo salió mal",
+    "subtitle": "La aplicación encontró un error inesperado. Por favor actualiza la página o intenta de nuevo más tarde.",
+    "errorDetails": "Detalles del Error:",
+    "refreshPage": "Actualizar Página",
+    "tryAgain": "Intentar de Nuevo"
+  },
+  "language": {
+    "switch": "切换到中文",
+    "switchTo": "Cambiar a {{language}}"
+  }
+}

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import InterestSelector from './components/InterestSelector';
 import MatchResults from './components/MatchResults';
 import ErrorBoundary from './components/ErrorBoundary';
+import LanguageSwitcher from './components/LanguageSwitcher';
 import { MatchingEngine } from './utils/matchingEngine';
 import SessionManager from './utils/sessionManager';
 import { supabaseService } from './utils/supabase';
@@ -10,6 +12,7 @@ import { Interest, MatchResult, SessionData } from './types';
 type AppStage = 'welcome' | 'enterName' | 'user1' | 'user2' | 'results' | 'share';
 
 const App: React.FC = () => {
+  const { t } = useTranslation();
   const [stage, setStage] = useState<AppStage>('welcome');
   const [user1Interests, setUser1Interests] = useState<Interest[]>([]);
   const [user2Interests, setUser2Interests] = useState<Interest[]>([]);
@@ -458,22 +461,22 @@ const App: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
       <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 sm:p-8 shadow-xl max-w-md w-full text-center">
         <div className="text-4xl sm:text-6xl mb-4 sm:mb-6">💕</div>
-        <h1 className="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">Soul Match</h1>
+        <h1 className="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">{t('app.title')}</h1>
         <p className="text-sm sm:text-base text-white/80 mb-4 sm:mb-6">
-          Discover your soulmate through AI-powered compatibility matching across cultures
+          {t('app.subtitle')}
         </p>
         
         <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
           <input
             type="text"
-            placeholder="Enter your name"
+            placeholder={t('app.welcome.enterYourName') as string}
             value={user1Name}
             onChange={(e) => setUser1Name(e.target.value)}
             className="w-full p-2.5 sm:p-3 rounded-lg bg-white/20 text-white placeholder-white/60 border border-white/30 text-sm sm:text-base"
           />
           <input
             type="text"
-            placeholder="Enter partner's name"
+            placeholder={t('app.welcome.enterPartnerName') as string}
             value={user2Name}
             onChange={(e) => setUser2Name(e.target.value)}
             className="w-full p-2.5 sm:p-3 rounded-lg bg-white/20 text-white placeholder-white/60 border border-white/30 text-sm sm:text-base"
@@ -485,7 +488,7 @@ const App: React.FC = () => {
           disabled={!user1Name || !user2Name}
           className="w-full bg-gradient-to-r from-qixi-pink to-qixi-purple text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {sessionData ? 'Start Matching' : 'Begin Match'}
+          {sessionData ? t('app.welcome.startMatching') : t('app.welcome.beginMatch')}
         </button>
       </div>
     </div>
@@ -495,11 +498,10 @@ const App: React.FC = () => {
     <div className="pt-8 sm:pt-12">
       <div className="text-center mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">
-          {userNumber === 1 ? user1Name : user2Name}'s Soul Selection
+          {t('app.userSelection.title', { name: userNumber === 1 ? user1Name : user2Name })}
         </h1>
         <p className="text-sm sm:text-base text-white/80">
-          Select your interests (skip uninterested items). Set importance level (1-5 stars) -
-          the higher the score, the deeper your soul connection.
+          {t('app.userSelection.subtitle')}
         </p>
       </div>
       
@@ -527,7 +529,7 @@ const App: React.FC = () => {
           disabled={(userNumber === 1 ? user1Interests : user2Interests).length === 0}
           className="bg-gradient-to-r from-qixi-pink to-qixi-purple text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {userNumber === 1 ? 'Complete selection and share with partner' : 'View match results'}
+          {userNumber === 1 ? t('app.userSelection.completeSelection') : t('app.userSelection.viewResults')}
         </button>
         
         {userNumber === 2 && sessionData && (
@@ -535,7 +537,7 @@ const App: React.FC = () => {
             onClick={() => setStage('share')}
             className="ml-2 sm:ml-4 bg-white/20 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-white/30 transition-all duration-300"
           >
-            Share again
+            {t('app.userSelection.shareAgain')}
           </button>
         )}
       </div>
@@ -546,15 +548,15 @@ const App: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
       <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 sm:p-8 shadow-xl max-w-md w-full text-center">
         <div className="text-4xl sm:text-6xl mb-4 sm:mb-6">👤</div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Enter Your Name</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">{t('app.enterName.title')}</h1>
         <p className="text-sm sm:text-base text-white/80 mb-4 sm:mb-6">
-          {user1Name} has completed their soul profile, now it's your turn to discover your connection!
+          {t('app.enterName.subtitle', { user1Name })}
         </p>
         
         <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
           <input
             type="text"
-            placeholder="Enter your name"
+            placeholder={t('app.enterName.title') as string}
             value={user2Name}
             onChange={(e) => setUser2Name(e.target.value)}
             className="w-full p-2.5 sm:p-3 rounded-lg bg-white/20 text-white placeholder-white/60 border border-white/30 text-sm sm:text-base"
@@ -567,7 +569,7 @@ const App: React.FC = () => {
             disabled={!user2Name}
             className="w-full bg-gradient-to-r from-qixi-pink to-qixi-purple text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Start Matching
+            {t('app.enterName.startMatching')}
           </button>
         </div>
       </div>
@@ -580,15 +582,15 @@ const App: React.FC = () => {
         <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
           <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 sm:p-8 shadow-xl max-w-md w-full text-center">
             <div className="text-4xl sm:text-6xl mb-4 sm:mb-6">❌</div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Data Lost</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">{t('app.errors.dataLost')}</h1>
             <p className="text-sm sm:text-base text-white/80 mb-4 sm:mb-6">
-              Sharing data lost, please start over.
+              {t('app.errors.sharingDataLost')}
             </p>
             <button
               onClick={resetApp}
               className="w-full bg-gradient-to-r from-qixi-pink to-qixi-purple text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300"
             >
-              Start Over
+              {t('app.errors.startOver')}
             </button>
           </div>
         </div>
@@ -599,24 +601,29 @@ const App: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
         <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 sm:p-8 shadow-xl max-w-md w-full text-center">
           <div className="text-4xl sm:text-6xl mb-4 sm:mb-6">📱</div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Share with {sessionData?.user2Name || user2Name}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">
+            {t('app.share.title', { partnerName: sessionData?.user2Name || user2Name })}
+          </h1>
           <p className="text-sm sm:text-base text-white/80 mb-4 sm:mb-6">
-            {user1Name} has completed their soul match profile, share the link below with {sessionData?.user2Name || user2Name} to discover your connection!
+            {t('app.share.subtitle', { 
+              userName: user1Name, 
+              partnerName: sessionData?.user2Name || user2Name 
+            })}
           </p>
           
           <div className="bg-white/20 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
-            <p className="text-white/60 text-xs sm:text-sm mb-2">Share Link</p>
+            <p className="text-white/60 text-xs sm:text-sm mb-2">{t('app.share.shareLink')}</p>
             {isLoadingShareLink ? (
-              <p className="text-white/80 text-xs sm:text-sm">Generating link...</p>
+              <p className="text-white/80 text-xs sm:text-sm">{t('app.share.generatingLink')}</p>
             ) : (
               <p className="text-white text-xs sm:text-sm break-all">
-                {shareLink || 'Link generation failed'}
+                {shareLink || t('app.errors.linkGenerationFailed')}
               </p>
             )}
             {!isLoadingShareLink && shareLink && (
               <p className="text-white/60 text-xs mt-2">
-                Link length: {shareLink.length} characters
-                {shareLink.includes('?s=') && ' (short link format)'}
+                {t('app.share.linkLength', { length: shareLink.length })}
+                {shareLink.includes('?s=') && t('app.share.shortLinkFormat')}
               </p>
             )}
           </div>
@@ -627,14 +634,14 @@ const App: React.FC = () => {
               disabled={!shareLink || isLoadingShareLink}
               className="w-full bg-gradient-to-r from-qixi-pink to-qixi-purple text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoadingShareLink ? 'Generating...' : 'Copy Share Link'}
+              {isLoadingShareLink ? t('app.share.generating') : t('app.share.copyShareLink')}
             </button>
             
             <button
               onClick={() => setStage('enterName')}
               className="w-full bg-white/20 text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-white/30 transition-all duration-300"
             >
-              I am {sessionData?.user2Name || user2Name}, start filling out
+              {t('app.share.startFillingOut', { partnerName: sessionData?.user2Name || user2Name })}
             </button>
           </div>
         </div>
@@ -645,6 +652,7 @@ const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <div className="min-h-screen">
+        <LanguageSwitcher />
         {stage === 'welcome' && renderWelcome()}
         {stage === 'enterName' && renderEnterName()}
         {stage === 'user1' && renderUserSelection(1)}
@@ -653,9 +661,9 @@ const App: React.FC = () => {
         {stage === 'results' && matchResult && (
           <div className="pt-8 sm:pt-12">
             <div className="text-center mb-6 sm:mb-8">
-              <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Soul Match Results</h1>
+              <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">{t('app.results.title')}</h1>
               <p className="text-sm sm:text-base text-white/80">
-                Discover your soul connection and explore personalized date activities
+                {t('app.results.subtitle')}
               </p>
             </div>
             
@@ -671,14 +679,14 @@ const App: React.FC = () => {
                   onClick={copyResultsLink}
                   className="w-full sm:w-auto bg-gradient-to-r from-qixi-blue to-qixi-purple text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-blue/80 hover:to-qixi-purple/80 transition-all duration-300"
                 >
-                  Share Results
+                  {t('app.results.shareResults')}
                 </button>
                 
                 <button
                   onClick={resetApp}
                   className="w-full sm:w-auto bg-gradient-to-r from-qixi-pink to-qixi-purple text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300"
                 >
-                  Start Over
+                  {t('app.results.startOver')}
                 </button>
               </div>
             </div>
