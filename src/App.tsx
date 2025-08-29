@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import InterestSelector from './components/InterestSelector';
 import MatchResults from './components/MatchResults';
+import ErrorBoundary from './components/ErrorBoundary';
 import { MatchingEngine } from './utils/matchingEngine';
 import SessionManager from './utils/sessionManager';
+import { supabaseService } from './utils/supabase';
 import { Interest, MatchResult, SessionData } from './types';
 
 type AppStage = 'welcome' | 'enterName' | 'user1' | 'user2' | 'results' | 'share';
@@ -98,79 +100,123 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const initializeApp = async () => {
-      console.log('🔍 Checking URL data...');
-      console.log('Current URL:', window.location.href);
-      console.log('URL search:', window.location.search);
-      console.log('URL hostname:', window.location.hostname);
-      
-      // 优先检查Supabase短链接
-      const shortId = SessionManager.getShortIdFromUrl();
-      if (shortId) {
-        console.log('🔗 Found Supabase short ID:', shortId);
-        const sessionDataFromSupabase = await SessionManager.getSessionFromSupabase(shortId);
-        if (sessionDataFromSupabase) {
-          console.log('✅ Found valid session data from Supabase');
-          processSessionData(sessionDataFromSupabase);
-          return;
-        }
-      }
-      
-      // 检查报告短链接
-      const reportShortId = SessionManager.getReportShortIdFromUrl();
-      if (reportShortId) {
-        console.log('📄 Found report short ID:', reportShortId);
-        const sessionDataFromSupabase = await SessionManager.getSessionFromSupabase(reportShortId);
-        if (sessionDataFromSupabase) {
-          console.log('✅ Found valid report data from Supabase');
-          processSessionData(sessionDataFromSupabase);
-          return;
-        }
-      }
-      
-      // Fallback到原有的URL数据检查
-      const sessionDataFromUrl = SessionManager.getSessionDataFromUrl();
-      console.log('📦 Session data from URL:', sessionDataFromUrl);
-      
-      if (sessionDataFromUrl) {
-        processSessionData(sessionDataFromUrl);
-        return;
-      }
-      
-      // 检查报告链接（向后兼容）
-      const reportId = SessionManager.getReportIdFromUrl();
-      if (reportId) {
-        const savedSession = SessionManager.loadSession();
-        if (savedSession && savedSession.sessionId === reportId && savedSession.user1 && savedSession.user2) {
-          const result = engine.calculateMatch(savedSession.user1.interests, savedSession.user2.interests);
-          setMatchResult(result);
-          setUser1Name(savedSession.user1.name);
-          setUser2Name(savedSession.user2.name);
-          setStage('results');
-          return;
-        }
-      }
-      
-      // 检查现有的session从URL或localStorage
-      const urlSessionId = SessionManager.getSessionIdFromUrl();
-      const savedSession = SessionManager.loadSession();
-      
-      if (urlSessionId && savedSession && savedSession.sessionId === urlSessionId) {
-        setSessionId(urlSessionId);
-        setSessionData(savedSession);
+      try {
+        console.log('🔍 Checking URL data...');
+        console.log('Current URL:', window.location.href);
+        console.log('URL search:', window.location.search);
+        console.log('URL hostname:', window.location.hostname);
         
-        if (savedSession.user1 && savedSession.user2) {
-          // 两个用户都完成了，显示结果
-          const result = engine.calculateMatch(savedSession.user1.interests, savedSession.user2.interests);
-          setMatchResult(result);
-          setUser1Name(savedSession.user1.name);
-          setUser2Name(savedSession.user2.name);
-          setStage('results');
-        } else if (savedSession.user1) {
-          // 用户1完成了，用户2需要输入名字并完成
-          setUser1Name(savedSession.user1.name);
-          setUser1Interests(savedSession.user1.interests);
-          setStage('enterName');
+        // 检查环境变量
+        const supabaseUrl = process.env?.REACT_APP_SUPABASE_URL || '';
+        const supabaseKey = process.env?.REACT_APP_SUPABASE_ANON_KEY || '';
+        console.log('Environment check:', {
+          hasProcess: typeof process !== 'undefined',
+          hasEnv: typeof process !== 'undefined' && process.env ? true : false,
+          supabaseUrl: supabaseUrl ? 'set' : 'not set',
+          supabaseKey: supabaseKey ? 'set' : 'not set',
+          urlLength: supabaseUrl.length,
+          keyLength: supabaseKey.length,
+          urlPreview: supabaseUrl ? supabaseUrl.substring(0, 30) + '...' : '',
+          keyPreview: supabaseKey ? supabaseKey.substring(0, 20) + '...' : ''
+        });
+        
+        // 测试Supabase连接
+        if (supabaseUrl && supabaseKey) {
+          console.log('🔍 Testing Supabase connection...');
+          try {
+            const connectionTest = await supabaseService.testConnection();
+            if (connectionTest.success) {
+              console.log('✅ Supabase connection test passed:', connectionTest.details);
+            } else {
+              console.error('❌ Supabase connection test failed:', connectionTest.error);
+              console.error('Error details:', connectionTest.details);
+            }
+          } catch (error) {
+            console.error('❌ Supabase connection test exception:', error);
+          }
         }
+        
+        // 优先检查Supabase短链接
+        const shortId = SessionManager.getShortIdFromUrl();
+        if (shortId) {
+          console.log('🔗 Found Supabase short ID:', shortId);
+          try {
+            const sessionDataFromSupabase = await SessionManager.getSessionFromSupabase(shortId);
+            if (sessionDataFromSupabase) {
+              console.log('✅ Found valid session data from Supabase');
+              processSessionData(sessionDataFromSupabase);
+              return;
+            }
+          } catch (error) {
+            console.warn('Error fetching from Supabase:', error);
+          }
+        }
+        
+        // 检查报告短链接
+        const reportShortId = SessionManager.getReportShortIdFromUrl();
+        if (reportShortId) {
+          console.log('📄 Found report short ID:', reportShortId);
+          try {
+            const sessionDataFromSupabase = await SessionManager.getSessionFromSupabase(reportShortId);
+            if (sessionDataFromSupabase) {
+              console.log('✅ Found valid report data from Supabase');
+              processSessionData(sessionDataFromSupabase);
+              return;
+            }
+          } catch (error) {
+            console.warn('Error fetching report from Supabase:', error);
+          }
+        }
+        
+        // Fallback到原有的URL数据检查
+        const sessionDataFromUrl = SessionManager.getSessionDataFromUrl();
+        console.log('📦 Session data from URL:', sessionDataFromUrl);
+        
+        if (sessionDataFromUrl) {
+          processSessionData(sessionDataFromUrl);
+          return;
+        }
+        
+        // 检查报告链接（向后兼容）
+        const reportId = SessionManager.getReportIdFromUrl();
+        if (reportId) {
+          const savedSession = SessionManager.loadSession();
+          if (savedSession && savedSession.sessionId === reportId && savedSession.user1 && savedSession.user2) {
+            const result = engine.calculateMatch(savedSession.user1.interests, savedSession.user2.interests);
+            setMatchResult(result);
+            setUser1Name(savedSession.user1.name);
+            setUser2Name(savedSession.user2.name);
+            setStage('results');
+            return;
+          }
+        }
+        
+        // 检查现有的session从URL或localStorage
+        const urlSessionId = SessionManager.getSessionIdFromUrl();
+        const savedSession = SessionManager.loadSession();
+        
+        if (urlSessionId && savedSession && savedSession.sessionId === urlSessionId) {
+          setSessionId(urlSessionId);
+          setSessionData(savedSession);
+          
+          if (savedSession.user1 && savedSession.user2) {
+            // 两个用户都完成了，显示结果
+            const result = engine.calculateMatch(savedSession.user1.interests, savedSession.user2.interests);
+            setMatchResult(result);
+            setUser1Name(savedSession.user1.name);
+            setUser2Name(savedSession.user2.name);
+            setStage('results');
+          } else if (savedSession.user1) {
+            // 用户1完成了，用户2需要输入名字并完成
+            setUser1Name(savedSession.user1.name);
+            setUser1Interests(savedSession.user1.interests);
+            setStage('enterName');
+          }
+        }
+      } catch (error) {
+        console.error('Error during app initialization:', error);
+        // 设置默认状态，确保应用能够启动
+        setStage('welcome');
       }
     };
     
@@ -597,47 +643,49 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      {stage === 'welcome' && renderWelcome()}
-      {stage === 'enterName' && renderEnterName()}
-      {stage === 'user1' && renderUserSelection(1)}
-      {stage === 'share' && renderShare()}
-      {stage === 'user2' && renderUserSelection(2)}
-      {stage === 'results' && matchResult && (
-        <div className="pt-8 sm:pt-12">
-          <div className="text-center mb-6 sm:mb-8">
-            <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Soul Match Results</h1>
-            <p className="text-sm sm:text-base text-white/80">
-              Discover your soul connection and explore personalized date activities
-            </p>
-          </div>
-          
-          <MatchResults
-            matchResult={matchResult}
-            user1Name={user1Name}
-            user2Name={user2Name}
-          />
-          
-          <div className="text-center mt-6 sm:mt-8">
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
-              <button
-                onClick={copyResultsLink}
-                className="w-full sm:w-auto bg-gradient-to-r from-qixi-blue to-qixi-purple text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-blue/80 hover:to-qixi-purple/80 transition-all duration-300"
-              >
-                Share Results
-              </button>
-              
-              <button
-                onClick={resetApp}
-                className="w-full sm:w-auto bg-gradient-to-r from-qixi-pink to-qixi-purple text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300"
-              >
-                Start Over
-              </button>
+    <ErrorBoundary>
+      <div className="min-h-screen">
+        {stage === 'welcome' && renderWelcome()}
+        {stage === 'enterName' && renderEnterName()}
+        {stage === 'user1' && renderUserSelection(1)}
+        {stage === 'share' && renderShare()}
+        {stage === 'user2' && renderUserSelection(2)}
+        {stage === 'results' && matchResult && (
+          <div className="pt-8 sm:pt-12">
+            <div className="text-center mb-6 sm:mb-8">
+              <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Soul Match Results</h1>
+              <p className="text-sm sm:text-base text-white/80">
+                Discover your soul connection and explore personalized date activities
+              </p>
+            </div>
+            
+            <MatchResults
+              matchResult={matchResult}
+              user1Name={user1Name}
+              user2Name={user2Name}
+            />
+            
+            <div className="text-center mt-6 sm:mt-8">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+                <button
+                  onClick={copyResultsLink}
+                  className="w-full sm:w-auto bg-gradient-to-r from-qixi-blue to-qixi-purple text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-blue/80 hover:to-qixi-purple/80 transition-all duration-300"
+                >
+                  Share Results
+                </button>
+                
+                <button
+                  onClick={resetApp}
+                  className="w-full sm:w-auto bg-gradient-to-r from-qixi-pink to-qixi-purple text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300"
+                >
+                  Start Over
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </ErrorBoundary>
   );
 };
 

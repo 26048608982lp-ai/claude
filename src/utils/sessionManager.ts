@@ -6,11 +6,17 @@ const STORAGE_KEY = 'soul-match-session';
 class SessionManager {
   // 检查Supabase是否可用
   private isSupabaseAvailable(): boolean {
-    try {
-      return !!(process.env.REACT_APP_SUPABASE_URL && process.env.REACT_APP_SUPABASE_ANON_KEY);
-    } catch {
-      return false;
-    }
+    const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || '';
+    const supabaseKey = process.env.REACT_APP_SUPABASE_ANON_KEY || '';
+    
+    console.log('Environment check:', {
+      supabaseUrl: supabaseUrl ? 'set' : 'not set',
+      supabaseKey: supabaseKey ? 'set' : 'not set',
+      urlLength: supabaseUrl.length,
+      keyLength: supabaseKey.length
+    });
+    
+    return !!(supabaseUrl && supabaseKey);
   }
   generateSessionId(): string {
     return Math.random().toString(36).substr(2, 9);

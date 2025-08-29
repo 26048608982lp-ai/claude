@@ -90,3 +90,26 @@ The MatchingEngine class implements:
 - `REACT_APP_SUPABASE_URL`: Supabase project URL for database connection
 - `REACT_APP_SUPABASE_ANON_KEY`: Supabase anonymous key for API access
 - Both variables required for full cross-device sharing functionality
+
+### Environment Variables Troubleshooting
+
+#### Vercel Deployment Issues
+**Problem**: Vercel deployment shows "Invalid API key" error despite correct configuration
+**Solution**: 
+1. Delete existing environment variables in Vercel console
+2. Manually re-add variables (don't copy-paste) to all environments (Development, Preview, Production)
+3. Force re-deploy with `--force` flag to clear build cache
+4. Verify connection through browser console logs
+
+**Common Issues**:
+- Environment variable encryption/decryption problems in Vercel
+- Build cache containing old environment variable values
+- Copy-paste introducing hidden characters or formatting issues
+- Environment variables not applied to all deployment environments
+
+#### Connection Testing
+The app includes built-in Supabase connection testing:
+- Automatic connection test on app startup
+- Detailed error logging with status codes and hints
+- Environment variable validation and debugging information
+- Browser console shows connection status and error details

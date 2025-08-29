@@ -8,7 +8,9 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(taskkill:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(vercel deploy:*)",
+      "Bash(vercel:*)"
     ],
     "deny": [],
     "ask": []
