@@ -6,7 +6,7 @@
 2. 注册/登录账户
 3. 点击 "New Project" 创建新项目
 4. 填写项目信息：
-   - Name: `qixi-match`
+   - Name: `soul-match`
    - Database Password: 设置强密码
    - Region: 选择离用户最近的区域（建议 Singapore 或 Tokyo）
 

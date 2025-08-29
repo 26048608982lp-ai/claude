@@ -412,9 +412,9 @@ const App: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
       <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 sm:p-8 shadow-xl max-w-md w-full text-center">
         <div className="text-4xl sm:text-6xl mb-4 sm:mb-6">💕</div>
-        <h1 className="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">Couple Match</h1>
+        <h1 className="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">Soul Match</h1>
         <p className="text-sm sm:text-base text-white/80 mb-4 sm:mb-6">
-          Discover your compatibility and find perfect date activities
+          Discover your soulmate through AI-powered compatibility matching across cultures
         </p>
         
         <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
@@ -449,11 +449,11 @@ const App: React.FC = () => {
     <div className="pt-8 sm:pt-12">
       <div className="text-center mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">
-          {userNumber === 1 ? user1Name : user2Name} 的选择
+          {userNumber === 1 ? user1Name : user2Name}'s Soul Selection
         </h1>
         <p className="text-sm sm:text-base text-white/80">
-          Select your interests (uninterested items can be skipped). After selection, set importance level (1-5 stars) -
-          the more you like it, the higher the score.
+          Select your interests (skip uninterested items). Set importance level (1-5 stars) -
+          the higher the score, the deeper your soul connection.
         </p>
       </div>
       
@@ -502,7 +502,7 @@ const App: React.FC = () => {
         <div className="text-4xl sm:text-6xl mb-4 sm:mb-6">👤</div>
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Enter Your Name</h1>
         <p className="text-sm sm:text-base text-white/80 mb-4 sm:mb-6">
-          {user1Name} has completed their selection, now it's your turn!
+          {user1Name} has completed their soul profile, now it's your turn to discover your connection!
         </p>
         
         <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
@@ -534,15 +534,15 @@ const App: React.FC = () => {
         <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
           <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 sm:p-8 shadow-xl max-w-md w-full text-center">
             <div className="text-4xl sm:text-6xl mb-4 sm:mb-6">❌</div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">数据丢失</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Data Lost</h1>
             <p className="text-sm sm:text-base text-white/80 mb-4 sm:mb-6">
-              分享数据丢失，请重新开始。
+              Sharing data lost, please start over.
             </p>
             <button
               onClick={resetApp}
               className="w-full bg-gradient-to-r from-qixi-pink to-qixi-purple text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300"
             >
-              重新开始
+              Start Over
             </button>
           </div>
         </div>
@@ -555,7 +555,7 @@ const App: React.FC = () => {
           <div className="text-4xl sm:text-6xl mb-4 sm:mb-6">📱</div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Share with {sessionData?.user2Name || user2Name}</h1>
           <p className="text-sm sm:text-base text-white/80 mb-4 sm:mb-6">
-            {user1Name} has completed their selection, please share the link below with {sessionData?.user2Name || user2Name} to fill out.
+            {user1Name} has completed their soul match profile, share the link below with {sessionData?.user2Name || user2Name} to discover your connection!
           </p>
           
           <div className="bg-white/20 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
@@ -606,9 +606,9 @@ const App: React.FC = () => {
       {stage === 'results' && matchResult && (
         <div className="pt-8 sm:pt-12">
           <div className="text-center mb-6 sm:mb-8">
-            <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Match Results</h1>
+            <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Soul Match Results</h1>
             <p className="text-sm sm:text-base text-white/80">
-              View your interest compatibility and recommended date activities
+              Discover your soul connection and explore personalized date activities
             </p>
           </div>
           

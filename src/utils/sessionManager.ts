@@ -1,7 +1,7 @@
 import { SessionData, UserSelection, Interest } from '../types';
 import { supabaseService } from './supabase';
 
-const STORAGE_KEY = 'qixi-match-session';
+const STORAGE_KEY = 'soul-match-session';
 
 class SessionManager {
   // 检查Supabase是否可用

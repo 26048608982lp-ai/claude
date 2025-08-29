@@ -1,6 +1,6 @@
 {
-  "short_name": "MatchApp",
-  "name": "Couple Interest Match",
+  "short_name": "SoulMatch",
+  "name": "Soul Match - Discover Your Perfect Connection",
   "icons": [
     {
       "src": "favicon.ico",
@@ -22,7 +22,7 @@
   "display": "standalone",
   "theme_color": "#ff6b9d",
   "background_color": "#ffffff",
-  "description": "Discover your perfect compatibility through shared interests and activities",
+  "description": "Find your soulmate through AI-powered compatibility matching. Connect based on interests, values, and personality across cultures.",
   "categories": ["social", "entertainment", "lifestyle"],
   "lang": "en"
 }
