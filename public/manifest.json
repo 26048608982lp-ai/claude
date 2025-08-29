@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "MatchApp",
+  "name": "Couple Interest Match",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,9 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#ff6b9d",
+  "background_color": "#ffffff",
+  "description": "Discover your perfect compatibility through shared interests and activities",
+  "categories": ["social", "entertainment", "lifestyle"],
+  "lang": "en"
 }

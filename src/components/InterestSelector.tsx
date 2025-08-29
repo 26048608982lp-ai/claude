@@ -15,50 +15,50 @@ const InterestSelector: React.FC<InterestSelectorProps> = ({
   const interestCategories = [
     {
       id: 'entertainment',
-      name: '娱乐',
+      name: 'Entertainment',
       interests: [
-        { id: 'movies', name: '看电影', category: 'entertainment', icon: '🎬', importance: 0 },
-        { id: 'music', name: '听音乐', category: 'entertainment', icon: '🎵', importance: 0 },
-        { id: 'games', name: '玩游戏', category: 'entertainment', icon: '🎮', importance: 0 },
-        { id: 'concerts', name: '演唱会', category: 'entertainment', icon: '🎤', importance: 0 },
-        { id: 'theater', name: '话剧', category: 'entertainment', icon: '🎭', importance: 0 },
-        { id: 'art', name: '艺术展', category: 'entertainment', icon: '🎨', importance: 0 },
+        { id: 'movies', name: 'Movies', category: 'entertainment', icon: '🎬', importance: 0 },
+        { id: 'music', name: 'Music', category: 'entertainment', icon: '🎵', importance: 0 },
+        { id: 'games', name: 'Gaming', category: 'entertainment', icon: '🎮', importance: 0 },
+        { id: 'concerts', name: 'Concerts', category: 'entertainment', icon: '🎤', importance: 0 },
+        { id: 'theater', name: 'Theater', category: 'entertainment', icon: '🎭', importance: 0 },
+        { id: 'art', name: 'Art Exhibitions', category: 'entertainment', icon: '🎨', importance: 0 },
       ]
     },
     {
       id: 'sports',
-      name: '运动',
+      name: 'Sports',
       interests: [
-        { id: 'basketball', name: '篮球', category: 'sports', icon: '🏀', importance: 0 },
-        { id: 'football', name: '足球', category: 'sports', icon: '⚽', importance: 0 },
-        { id: 'tennis', name: '网球', category: 'sports', icon: '🎾', importance: 0 },
-        { id: 'swimming', name: '游泳', category: 'sports', icon: '🏊', importance: 0 },
-        { id: 'hiking', name: '徒步', category: 'sports', icon: '🥾', importance: 0 },
-        { id: 'yoga', name: '瑜伽', category: 'sports', icon: '🧘', importance: 0 },
+        { id: 'basketball', name: 'Basketball', category: 'sports', icon: '🏀', importance: 0 },
+        { id: 'football', name: 'Football', category: 'sports', icon: '⚽', importance: 0 },
+        { id: 'tennis', name: 'Tennis', category: 'sports', icon: '🎾', importance: 0 },
+        { id: 'swimming', name: 'Swimming', category: 'sports', icon: '🏊', importance: 0 },
+        { id: 'hiking', name: 'Hiking', category: 'sports', icon: '🥾', importance: 0 },
+        { id: 'yoga', name: 'Yoga', category: 'sports', icon: '🧘', importance: 0 },
       ]
     },
     {
       id: 'food',
-      name: '美食',
+      name: 'Food',
       interests: [
-        { id: 'chinese', name: '中餐', category: 'food', icon: '🥘', importance: 0 },
-        { id: 'western', name: '西餐', category: 'food', icon: '🍝', importance: 0 },
-        { id: 'japanese', name: '日料', category: 'food', icon: '🍱', importance: 0 },
-        { id: 'dessert', name: '甜点', category: 'food', icon: '🍰', importance: 0 },
-        { id: 'coffee', name: '咖啡', category: 'food', icon: '☕', importance: 0 },
-        { id: 'cooking', name: '烹饪', category: 'food', icon: '👨‍🍳', importance: 0 },
+        { id: 'chinese', name: 'Chinese Food', category: 'food', icon: '🥘', importance: 0 },
+        { id: 'western', name: 'Western Food', category: 'food', icon: '🍝', importance: 0 },
+        { id: 'japanese', name: 'Japanese Food', category: 'food', icon: '🍱', importance: 0 },
+        { id: 'dessert', name: 'Desserts', category: 'food', icon: '🍰', importance: 0 },
+        { id: 'coffee', name: 'Coffee', category: 'food', icon: '☕', importance: 0 },
+        { id: 'cooking', name: 'Cooking', category: 'food', icon: '👨‍🍳', importance: 0 },
       ]
     },
     {
       id: 'travel',
-      name: '旅行',
+      name: 'Travel',
       interests: [
-        { id: 'beach', name: '海滩', category: 'travel', icon: '🏖️', importance: 0 },
-        { id: 'mountains', name: '山景', category: 'travel', icon: '🏔️', importance: 0 },
-        { id: 'city', name: '城市', category: 'travel', icon: '🏙️', importance: 0 },
-        { id: 'countryside', name: '乡村', category: 'travel', icon: '🌾', importance: 0 },
-        { id: 'museum', name: '博物馆', category: 'travel', icon: '🏛️', importance: 0 },
-        { id: 'shopping', name: '购物', category: 'travel', icon: '🛍️', importance: 0 },
+        { id: 'beach', name: 'Beach', category: 'travel', icon: '🏖️', importance: 0 },
+        { id: 'mountains', name: 'Mountains', category: 'travel', icon: '🏔️', importance: 0 },
+        { id: 'city', name: 'City', category: 'travel', icon: '🏙️', importance: 0 },
+        { id: 'countryside', name: 'Countryside', category: 'travel', icon: '🌾', importance: 0 },
+        { id: 'museum', name: 'Museums', category: 'travel', icon: '🏛️', importance: 0 },
+        { id: 'shopping', name: 'Shopping', category: 'travel', icon: '🛍️', importance: 0 },
       ]
     }
   ];
@@ -96,7 +96,7 @@ const InterestSelector: React.FC<InterestSelectorProps> = ({
   return (
     <div className="w-full max-w-4xl mx-auto p-4 sm:p-6">
       <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 sm:p-6 shadow-xl">
-        <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 text-center">选择你的兴趣爱好</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 text-center">Select Your Interests</h2>
         
         {/* 分类标签 */}
         <div className="flex flex-wrap justify-center gap-1 sm:gap-2 mb-4 sm:mb-6">
@@ -139,7 +139,7 @@ const InterestSelector: React.FC<InterestSelectorProps> = ({
               
               {isSelected(interest.id) && (
                 <div className="mt-2 sm:mt-3">
-                  <label className="text-xs text-white/80 block mb-1">重要程度</label>
+                  <label className="text-xs text-white/80 block mb-1">Importance</label>
                   <input
                     type="range"
                     min="1"
@@ -150,8 +150,8 @@ const InterestSelector: React.FC<InterestSelectorProps> = ({
                     onClick={(e) => e.stopPropagation()}
                   />
                   <div className="flex justify-between text-xs text-white/60 mt-1">
-                    <span>一般</span>
-                    <span>很重要</span>
+                    <span>Normal</span>
+                    <span>Very Important</span>
                   </div>
                 </div>
               )}
@@ -161,7 +161,7 @@ const InterestSelector: React.FC<InterestSelectorProps> = ({
 
         {/* 已选择的兴趣预览 */}
         <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-white/20">
-          <h3 className="text-base sm:text-lg font-semibold text-white mb-2 sm:mb-3">已选择的兴趣 ({selectedInterests.length})</h3>
+          <h3 className="text-base sm:text-lg font-semibold text-white mb-2 sm:mb-3">Selected Interests ({selectedInterests.length})</h3>
           <div className="flex flex-wrap gap-1.5 sm:gap-2">
             {selectedInterests.map(interest => (
               <div

@@ -20,7 +20,7 @@ const MatchResults: React.FC<MatchResultsProps> = ({
       {/* 匹配度总览 */}
       <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 shadow-xl">
         <h2 className="text-3xl font-bold text-white text-center mb-6">
-          {user1Name} ❤️ {user2Name} 的匹配结果
+          {user1Name} ❤️ {user2Name} Match Results
         </h2>
         
         <div className="text-center mb-8">
@@ -55,7 +55,7 @@ const MatchResults: React.FC<MatchResultsProps> = ({
       <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 shadow-xl">
         <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
           <span className="text-qixi-gold">⭐</span>
-          共同兴趣 ({matchResult.commonInterests.length})
+          Common Interests ({matchResult.commonInterests.length})
         </h3>
         
         {matchResult.commonInterests.length > 0 ? (
@@ -68,7 +68,7 @@ const MatchResults: React.FC<MatchResultsProps> = ({
                 <div className="text-2xl mb-1">{interest.icon}</div>
                 <div className="font-medium">{interest.name}</div>
                 <div className="text-xs opacity-80">
-                  重要程度: {interest.importance}★
+                  Importance: {interest.importance}★
                 </div>
               </div>
             ))}
@@ -76,7 +76,7 @@ const MatchResults: React.FC<MatchResultsProps> = ({
         ) : (
           <div className="text-center text-white/60 py-8">
             <div className="text-4xl mb-2">🌟</div>
-            <p>没有共同兴趣，但这正是了解彼此的好机会！</p>
+            <p>No common interests, but this is a great opportunity to get to know each other!</p>
           </div>
         )}
       </div>
@@ -85,7 +85,7 @@ const MatchResults: React.FC<MatchResultsProps> = ({
       <div className="grid md:grid-cols-2 gap-6">
         <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 shadow-xl">
           <h3 className="text-xl font-bold text-white mb-4">
-            {user1Name} 的独特兴趣
+            {user1Name}'s Unique Interests
           </h3>
           <div className="space-y-2">
             {matchResult.uniqueInterests.user1.length > 0 ? (
@@ -99,14 +99,14 @@ const MatchResults: React.FC<MatchResultsProps> = ({
                 </div>
               ))
             ) : (
-              <p className="text-white/60 text-center py-4">所有兴趣都是共同的</p>
+              <p className="text-white/60 text-center py-4">All interests are common</p>
             )}
           </div>
         </div>
 
         <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 shadow-xl">
           <h3 className="text-xl font-bold text-white mb-4">
-            {user2Name} 的独特兴趣
+            {user2Name}'s Unique Interests
           </h3>
           <div className="space-y-2">
             {matchResult.uniqueInterests.user2.length > 0 ? (
@@ -120,7 +120,7 @@ const MatchResults: React.FC<MatchResultsProps> = ({
                 </div>
               ))
             ) : (
-              <p className="text-white/60 text-center py-4">所有兴趣都是共同的</p>
+              <p className="text-white/60 text-center py-4">All interests are common</p>
             )}
           </div>
         </div>
@@ -130,7 +130,7 @@ const MatchResults: React.FC<MatchResultsProps> = ({
       <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 shadow-xl">
         <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
           <span className="text-qixi-gold">💝</span>
-          为你们推荐的约会活动
+          Recommended Date Activities for You
         </h3>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -170,26 +170,26 @@ const MatchResults: React.FC<MatchResultsProps> = ({
       <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 shadow-xl">
         <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
           <span className="text-qixi-gold">💕</span>
-          增进感情的小建议
+          Tips to Strengthen Your Relationship
         </h3>
         
         <div className="grid md:grid-cols-2 gap-4">
           <div className="bg-gradient-to-r from-qixi-pink/20 to-qixi-purple/20 p-4 rounded-lg">
-            <h4 className="font-bold text-white mb-2">基于共同兴趣</h4>
+            <h4 className="font-bold text-white mb-2">Based on Common Interests</h4>
             <p className="text-white/80 text-sm">
               {matchResult.commonInterests.length > 0
-                ? `多参与${matchResult.commonInterests[0]?.name}相关的活动，创造共同回忆。`
-                : '尝试一起探索新的兴趣，发现彼此的新一面。'
+                ? `Participate in more ${matchResult.commonInterests[0]?.name} related activities to create shared memories.`
+                : 'Try exploring new interests together to discover new sides of each other.'
               }
             </p>
           </div>
           
           <div className="bg-gradient-to-r from-qixi-blue/20 to-qixi-gold/20 p-4 rounded-lg">
-            <h4 className="font-bold text-white mb-2">基于独特兴趣</h4>
+            <h4 className="font-bold text-white mb-2">Based on Unique Interests</h4>
             <p className="text-white/80 text-sm">
               {matchResult.uniqueInterests.user1.length > 0 || matchResult.uniqueInterests.user2.length > 0
-                ? '互相分享各自的专长，教会对方新的技能。'
-                : '一起尝试全新的活动，共同成长。'
+                ? 'Share your expertise with each other and teach new skills.'
+                : 'Try completely new activities together and grow as a couple.'
               }
             </p>
           </div>

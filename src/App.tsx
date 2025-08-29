@@ -299,20 +299,20 @@ const App: React.FC = () => {
     
     if (!sessionData) {
       console.error('❌ No session data available');
-      alert('没有可分享的数据');
+      alert('No shareable data available');
       return;
     }
     
     // 验证用户A分享场景的数据完整性
     if (!sessionData.user1) {
       console.error('❌ User1 data missing from session');
-      alert('用户A数据不完整，请重新完成选择');
+      alert('User A data incomplete, please complete selection again');
       return;
     }
     
     if (!sessionData.user2Name && !user2Name) {
       console.error('❌ User2 name missing');
-      alert('请确保已输入用户B的姓名');
+      alert('Please ensure you have entered User B\'s name');
       return;
     }
     
@@ -340,11 +340,11 @@ const App: React.FC = () => {
       
       await navigator.clipboard.writeText(shareLink);
       console.log('✅ Share link copied to clipboard');
-      alert('分享链接已复制到剪贴板！可以发送给' + (shareSessionData.user2Name || user2Name) + '填写。');
+      alert('Share link copied to clipboard! You can send it to ' + (shareSessionData.user2Name || user2Name) + ' to fill out.');
     } catch (err) {
       console.error('❌ Failed to copy share link: ', err);
       console.error('Error details:', err);
-      alert('复制分享链接失败，请手动复制链接');
+      alert('Failed to copy share link, please copy manually');
     }
   };
 
@@ -357,7 +357,7 @@ const App: React.FC = () => {
     
     if (!sessionData || !matchResult) {
       console.error('❌ Missing session data or match result');
-      alert('没有可分享的结果数据');
+      alert('No results data available to share');
       return;
     }
     
@@ -376,13 +376,13 @@ const App: React.FC = () => {
       // 验证数据完整性
       if (!completeSessionData.user1 || !completeSessionData.user2) {
         console.error('❌ Incomplete user data in session');
-        alert('分享数据不完整，请重新完成匹配');
+        alert('Sharing data incomplete, please complete match again');
         return;
       }
       
       if (!completeSessionData.user2Name) {
         console.error('❌ Missing user2Name in session data');
-        alert('缺少用户B姓名信息');
+        alert('Missing User B name information');
         return;
       }
       
@@ -401,10 +401,10 @@ const App: React.FC = () => {
       
       await navigator.clipboard.writeText(reportLink);
       console.log('✅ Report link copied to clipboard');
-      alert('结果链接已复制到剪贴板！可以分享给对方查看匹配结果。');
+      alert('Results link copied to clipboard! You can share it with your partner to view the match results.');
     } catch (err) {
       console.error('❌ Failed to copy results link: ', err);
-      alert('复制结果链接失败，请手动复制链接');
+      alert('Failed to copy results link, please copy manually');
     }
   };
 
@@ -412,22 +412,22 @@ const App: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
       <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 sm:p-8 shadow-xl max-w-md w-full text-center">
         <div className="text-4xl sm:text-6xl mb-4 sm:mb-6">💕</div>
-        <h1 className="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">七夕匹配</h1>
+        <h1 className="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">Couple Match</h1>
         <p className="text-sm sm:text-base text-white/80 mb-4 sm:mb-6">
-          发现你们之间的兴趣匹配，找到最适合的约会活动
+          Discover your compatibility and find perfect date activities
         </p>
         
         <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
           <input
             type="text"
-            placeholder="请输入你的名字"
+            placeholder="Enter your name"
             value={user1Name}
             onChange={(e) => setUser1Name(e.target.value)}
             className="w-full p-2.5 sm:p-3 rounded-lg bg-white/20 text-white placeholder-white/60 border border-white/30 text-sm sm:text-base"
           />
           <input
             type="text"
-            placeholder="请输入对方的名字"
+            placeholder="Enter partner's name"
             value={user2Name}
             onChange={(e) => setUser2Name(e.target.value)}
             className="w-full p-2.5 sm:p-3 rounded-lg bg-white/20 text-white placeholder-white/60 border border-white/30 text-sm sm:text-base"
@@ -439,7 +439,7 @@ const App: React.FC = () => {
           disabled={!user1Name || !user2Name}
           className="w-full bg-gradient-to-r from-qixi-pink to-qixi-purple text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {sessionData ? '开始填写' : '开始匹配'}
+          {sessionData ? 'Start Matching' : 'Begin Match'}
         </button>
       </div>
     </div>
@@ -452,8 +452,8 @@ const App: React.FC = () => {
           {userNumber === 1 ? user1Name : user2Name} 的选择
         </h1>
         <p className="text-sm sm:text-base text-white/80">
-          选择你感兴趣的活动，不感兴趣的不用选择。选择后可以设置重要程度（1-5星），
-          越喜欢越重要就给越高分。
+          Select your interests (uninterested items can be skipped). After selection, set importance level (1-5 stars) -
+          the more you like it, the higher the score.
         </p>
       </div>
       
@@ -481,7 +481,7 @@ const App: React.FC = () => {
           disabled={(userNumber === 1 ? user1Interests : user2Interests).length === 0}
           className="bg-gradient-to-r from-qixi-pink to-qixi-purple text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {userNumber === 1 ? '完成选择，分享给另一个人' : '查看匹配结果'}
+          {userNumber === 1 ? 'Complete selection and share with partner' : 'View match results'}
         </button>
         
         {userNumber === 2 && sessionData && (
@@ -489,7 +489,7 @@ const App: React.FC = () => {
             onClick={() => setStage('share')}
             className="ml-2 sm:ml-4 bg-white/20 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-white/30 transition-all duration-300"
           >
-            重新分享
+            Share again
           </button>
         )}
       </div>
@@ -500,15 +500,15 @@ const App: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
       <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 sm:p-8 shadow-xl max-w-md w-full text-center">
         <div className="text-4xl sm:text-6xl mb-4 sm:mb-6">👤</div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">请输入你的名字</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Enter Your Name</h1>
         <p className="text-sm sm:text-base text-white/80 mb-4 sm:mb-6">
-          {user1Name} 已经完成了选择，现在轮到你了！
+          {user1Name} has completed their selection, now it's your turn!
         </p>
         
         <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
           <input
             type="text"
-            placeholder="请输入你的名字"
+            placeholder="Enter your name"
             value={user2Name}
             onChange={(e) => setUser2Name(e.target.value)}
             className="w-full p-2.5 sm:p-3 rounded-lg bg-white/20 text-white placeholder-white/60 border border-white/30 text-sm sm:text-base"
@@ -521,7 +521,7 @@ const App: React.FC = () => {
             disabled={!user2Name}
             className="w-full bg-gradient-to-r from-qixi-pink to-qixi-purple text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            开始填写
+            Start Matching
           </button>
         </div>
       </div>
@@ -553,24 +553,24 @@ const App: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
         <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 sm:p-8 shadow-xl max-w-md w-full text-center">
           <div className="text-4xl sm:text-6xl mb-4 sm:mb-6">📱</div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">分享给 {sessionData?.user2Name || user2Name}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Share with {sessionData?.user2Name || user2Name}</h1>
           <p className="text-sm sm:text-base text-white/80 mb-4 sm:mb-6">
-            {user1Name} 已经完成了选择，请分享下面的链接给 {sessionData?.user2Name || user2Name} 填写。
+            {user1Name} has completed their selection, please share the link below with {sessionData?.user2Name || user2Name} to fill out.
           </p>
           
           <div className="bg-white/20 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
-            <p className="text-white/60 text-xs sm:text-sm mb-2">分享链接</p>
+            <p className="text-white/60 text-xs sm:text-sm mb-2">Share Link</p>
             {isLoadingShareLink ? (
-              <p className="text-white/80 text-xs sm:text-sm">正在生成链接...</p>
+              <p className="text-white/80 text-xs sm:text-sm">Generating link...</p>
             ) : (
               <p className="text-white text-xs sm:text-sm break-all">
-                {shareLink || '链接生成失败'}
+                {shareLink || 'Link generation failed'}
               </p>
             )}
             {!isLoadingShareLink && shareLink && (
               <p className="text-white/60 text-xs mt-2">
-                链接长度: {shareLink.length} 字符
-                {shareLink.includes('?s=') && ' (短链接格式)'}
+                Link length: {shareLink.length} characters
+                {shareLink.includes('?s=') && ' (short link format)'}
               </p>
             )}
           </div>
@@ -581,14 +581,14 @@ const App: React.FC = () => {
               disabled={!shareLink || isLoadingShareLink}
               className="w-full bg-gradient-to-r from-qixi-pink to-qixi-purple text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoadingShareLink ? '生成中...' : '复制分享链接'}
+              {isLoadingShareLink ? 'Generating...' : 'Copy Share Link'}
             </button>
             
             <button
               onClick={() => setStage('enterName')}
               className="w-full bg-white/20 text-white py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-white/30 transition-all duration-300"
             >
-              我就是 {sessionData?.user2Name || user2Name}，开始填写
+              I am {sessionData?.user2Name || user2Name}, start filling out
             </button>
           </div>
         </div>
@@ -606,9 +606,9 @@ const App: React.FC = () => {
       {stage === 'results' && matchResult && (
         <div className="pt-8 sm:pt-12">
           <div className="text-center mb-6 sm:mb-8">
-            <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">匹配结果</h1>
+            <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Match Results</h1>
             <p className="text-sm sm:text-base text-white/80">
-              查看你们的兴趣匹配和推荐的约会活动
+              View your interest compatibility and recommended date activities
             </p>
           </div>
           
@@ -624,14 +624,14 @@ const App: React.FC = () => {
                 onClick={copyResultsLink}
                 className="w-full sm:w-auto bg-gradient-to-r from-qixi-blue to-qixi-purple text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-blue/80 hover:to-qixi-purple/80 transition-all duration-300"
               >
-                分享结果
+                Share Results
               </button>
               
               <button
                 onClick={resetApp}
                 className="w-full sm:w-auto bg-gradient-to-r from-qixi-pink to-qixi-purple text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:from-qixi-pink/80 hover:to-qixi-purple/80 transition-all duration-300"
               >
-                重新开始
+                Start Over
               </button>
             </div>
           </div>

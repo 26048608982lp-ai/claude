@@ -4,75 +4,75 @@ export class MatchingEngine {
   private activities: Activity[] = [
     {
       id: 'movie_night',
-      name: '电影之夜',
+      name: 'Movie Night',
       category: 'entertainment',
-      description: '一起看一场浪漫的电影，享受二人世界',
+      description: 'Watch a romantic movie together and enjoy quality time',
       matchScore: 0,
-      duration: '2-3小时',
-      cost: '中等'
+      duration: '2-3 hours',
+      cost: 'Medium'
     },
     {
       id: 'concert',
-      name: '演唱会',
+      name: 'Concert',
       category: 'entertainment',
-      description: '参加一场激动人心的演唱会',
+      description: 'Attend an exciting live concert',
       matchScore: 0,
-      duration: '3-4小时',
-      cost: '较高'
+      duration: '3-4 hours',
+      cost: 'High'
     },
     {
       id: 'hiking_date',
-      name: '徒步约会',
+      name: 'Hiking Date',
       category: 'sports',
-      description: '一起徒步，享受自然风光',
+      description: 'Hike together and enjoy natural scenery',
       matchScore: 0,
-      duration: '半天',
-      cost: '低'
+      duration: 'Half day',
+      cost: 'Low'
     },
     {
       id: 'cooking_class',
-      name: '烹饪课程',
+      name: 'Cooking Class',
       category: 'food',
-      description: '一起学习制作美食',
+      description: 'Learn to cook delicious meals together',
       matchScore: 0,
-      duration: '2-3小时',
-      cost: '中等'
+      duration: '2-3 hours',
+      cost: 'Medium'
     },
     {
       id: 'beach_vacation',
-      name: '海滩度假',
+      name: 'Beach Vacation',
       category: 'travel',
-      description: '享受阳光、沙滩和海浪',
+      description: 'Enjoy sunshine, sand, and waves',
       matchScore: 0,
-      duration: '几天',
-      cost: '较高'
+      duration: 'Few days',
+      cost: 'High'
     },
     {
       id: 'museum_visit',
-      name: '博物馆之旅',
+      name: 'Museum Visit',
       category: 'travel',
-      description: '一起探索文化和历史',
+      description: 'Explore culture and history together',
       matchScore: 0,
-      duration: '2-3小时',
-      cost: '低'
+      duration: '2-3 hours',
+      cost: 'Low'
     },
     {
       id: 'game_night',
-      name: '游戏之夜',
+      name: 'Game Night',
       category: 'entertainment',
-      description: '一起玩游戏，享受竞争的乐趣',
+      description: 'Play games together and enjoy friendly competition',
       matchScore: 0,
-      duration: '2-3小时',
-      cost: '低'
+      duration: '2-3 hours',
+      cost: 'Low'
     },
     {
       id: 'coffee_date',
-      name: '咖啡约会',
+      name: 'Coffee Date',
       category: 'food',
-      description: '在咖啡厅享受悠闲时光',
+      description: 'Enjoy a relaxing time at a coffee shop',
       matchScore: 0,
-      duration: '1-2小时',
-      cost: '低'
+      duration: '1-2 hours',
+      cost: 'Low'
     }
   ];
 
@@ -211,19 +211,19 @@ export class MatchingEngine {
   }
 
   getMatchLevel(score: number): string {
-    if (score >= 90) return '天作之合 💕';
-    if (score >= 80) return '心有灵犀 💖';
-    if (score >= 70) return '志趣相投 💗';
-    if (score >= 60) return '互相吸引 💓';
-    return '需要了解 💝';
+    if (score >= 90) return 'Perfect Match 💕';
+    if (score >= 80) return 'Deep Connection 💖';
+    if (score >= 70) return 'Great Compatibility 💗';
+    if (score >= 60) return 'Good Attraction 💓';
+    return 'Room to Grow 💝';
   }
 
   getCategoryName(category: string): string {
     const names: Record<string, string> = {
-      entertainment: '娱乐',
-      sports: '运动',
-      food: '美食',
-      travel: '旅行'
+      entertainment: 'Entertainment',
+      sports: 'Sports',
+      food: 'Food',
+      travel: 'Travel'
     };
     return names[category] || category;
   }
