@@ -7,15 +7,15 @@
     <meta name="theme-color" content="#ff6b9d" />
     <meta
       name="description"
-      content="Soul Match - Discover your perfect connection through AI-powered compatibility matching. Find your soulmate based on interests, values, and personality across cultures."
+      content="Soul Match - Discover your perfect connection through compatibility matching. Find your soulmate based on interests, values, and personality."
     />
     <meta property="og:title" content="Soul Match - Discover Your Perfect Connection" />
-    <meta property="og:description" content="Find your soulmate through AI-powered compatibility matching. Connect based on interests, values, and personality across cultures." />
+    <meta property="og:description" content="Find your soulmate through compatibility matching. Connect based on interests, values, and personality." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="%PUBLIC_URL%/logo192.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Soul Match - Discover Your Perfect Connection" />
-    <meta name="twitter:description" content="Find your soulmate through AI-powered compatibility matching. Connect based on interests, values, and personality across cultures." />
+    <meta name="twitter:description" content="Find your soulmate through compatibility matching. Connect based on interests, values, and personality." />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Soul Match - Discover Your Perfect Connection</title>
@@ -23,5 +23,24 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+      // Vercel Analytics tracking
+      (function() {
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+          return; // Don't track localhost
+        }
+        
+        // Simple page view tracking
+        const script = document.createElement('script');
+        script.src = 'https://cdn.vercel-insights.com/script.js';
+        script.defer = true;
+        document.head.appendChild(script);
+        
+        // Track page views
+        if (typeof window !== 'undefined' && window.va) {
+          window.va('pageview');
+        }
+      })();
+    </script>
   </body>
 </html>

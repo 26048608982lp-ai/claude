@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is Soul Match - an international soulmate matching web application built with React and TypeScript. The app features a user-friendly grid-based interest selection system where users can select their interests and rate their importance level (1-5 stars). The system calculates compatibility between two users using a sophisticated matching algorithm and recommends personalized dating activities across cultures. The app is optimized for global deployment with comprehensive multi-language support and region-based localization.
+This is Soul Match - an international soulmate matching web application built with React and TypeScript. The app features a user-friendly grid-based interest selection system where users can select their interests and rate their importance level (1-5 stars). The system calculates compatibility between two users using a sophisticated matching algorithm and recommends personalized dating activities. The app is optimized for global deployment with comprehensive multi-language support and region-based localization.
 
 ## Development Commands
 

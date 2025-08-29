@@ -44,10 +44,17 @@ i18n
 // Region-based language override for mainland China
 const overrideLanguageForRegion = () => {
   const userLanguage = navigator.language;
+  const cachedLanguage = localStorage.getItem('i18nextLng');
   
-  // Check if user is in mainland China
-  if (userLanguage === 'zh-CN' || userLanguage.startsWith('zh-')) {
-    i18n.changeLanguage('zh');
+  // Only override if no cached language preference exists
+  if (!cachedLanguage) {
+    // Check if user is in mainland China
+    if (userLanguage === 'zh-CN' || userLanguage.startsWith('zh-')) {
+      console.log('Detected Chinese region, switching to Chinese language');
+      i18n.changeLanguage('zh');
+    }
+  } else {
+    console.log('Using cached language preference:', cachedLanguage);
   }
 };
 

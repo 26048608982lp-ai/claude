@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "心灵匹配",
-    "subtitle": "通过AI驱动的跨文化兼容性匹配发现你的灵魂伴侣",
+    "subtitle": "通过兴趣匹配发现你的灵魂伴侣",
     "welcome": {
       "enterYourName": "输入你的名字",
       "enterPartnerName": "输入伴侣的名字",

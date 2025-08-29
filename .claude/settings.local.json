@@ -10,7 +10,8 @@
       "Bash(taskkill:*)",
       "Bash(npm install:*)",
       "Bash(vercel deploy:*)",
-      "Bash(vercel:*)"
+      "Bash(vercel:*)",
+      "Bash(npm i:*)"
     ],
     "deny": [],
     "ask": []
